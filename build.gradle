@@ -1,0 +1,110 @@
+apply plugin: 'groovy'
+apply plugin: 'idea'
+version = '0.1'
+defaultTasks 'clean', 'build', 'dist'
+ant.property(environment: 'env')
+
+if(!ant.properties['env.GRADLE_HOME']) {
+    throw new Exception('Please set $GRADLE_HOME')
+}
+
+def gradleHomeDir = System.getenv().get('GRADLE_HOME')
+
+configurations {
+    provided {
+        description = 'Non-exported compile-time dependencies'
+    }
+
+    testProvided {
+        description = 'Non-exported compile-time test dependencies'
+    }
+}
+
+sourceSets {
+    main {
+        compileClasspath += configurations.provided
+        compileClasspath += configurations.testProvided
+    }
+
+    test {
+        compileClasspath += configurations.testProvided
+        runtimeClasspath += configurations.testProvided
+    }
+}
+
+repositories {
+    mavenCentral()
+    add(new org.apache.ivy.plugins.resolver.URLResolver()) {
+        name = "GitHub"
+    	addArtifactPattern 'http://cloud.github.com/downloads/glaforge/[organisation]/[module]-[revision].[ext]'
+    }
+}
+
+dependencies {
+    def appEngineVersion = '1.4.0'
+    groovy group: 'org.codehaus.groovy', name: 'groovy', version: '1.7.+'
+    compile group: 'gaelyk', name: 'gaelyk', version: '0.6'
+    compile group: 'com.google.appengine', name: 'appengine-api-1.0-sdk', version: appEngineVersion
+    compile group: 'com.google.appengine', name: 'appengine-api-labs', version: appEngineVersion
+    testCompile group: 'com.google.appengine', name: 'appengine-api-stubs', version: appEngineVersion
+    testCompile group: 'com.google.appengine', name: 'appengine-testing', version: appEngineVersion
+    testCompile group: 'junit', name: 'junit', version: '4.+'
+    testProvided group: 'org.apache.geronimo.specs', name: 'geronimo-servlet_2.5_spec', version: '1.2'
+}
+
+jar {
+    manifest {
+        attributes 'Implementation-Title': 'Gaelyk datastore viewer plugin',
+                   'Implementation-Version': version,
+                   'Built-By': System.getProperty("user.name"),
+                   'Built-Date': new Date(),
+                   'Built-JDK': System.getProperty("java.version")
+    }
+}
+
+ideaProject {
+    javaVersion = '1.6'
+
+    withXml { provider ->
+        def node = provider.asNode()
+
+        // Use GIT
+        def vcsConfig = node.component.find { it.'@name' == 'VcsDirectoryMappings' }
+        vcsConfig.mapping[0].'@vcs' = 'Git'
+
+        // Set Gradle home
+        def gradleSettings = node.appendNode('component', [name: 'GradleSettings'])
+        gradleSettings.appendNode('option', [name: 'SDK_HOME', value: gradleHomeDir])
+    }
+}
+
+ideaModule {
+    scopes.COMPILE.plus.add(configurations.provided)
+    scopes.COMPILE.plus.add(configurations.testProvided)
+    scopes.TEST.plus.add(configurations.testProvided)
+}
+
+def distDir = "$buildDir/dist"
+def distLibDir = "$distDir/war/WEB-INF/lib"
+
+task copyDistResources << {
+    description = "Copies dist resources"
+
+    ant.delete(dir: distDir)
+
+    ant.copy todir: "$distDir/war", {
+        fileset dir: "war"
+    }
+
+    ant.copy file: jar.archivePath, todir: distLibDir
+}
+
+task zipDist(type: Zip, dependsOn: copyDistResources) {
+    description = "Zips distribution"
+
+    from distDir
+}
+
+task dist(dependsOn: [copyDistResources, zipDist]) << {
+    description = "Creates plugin distribution"
+}
