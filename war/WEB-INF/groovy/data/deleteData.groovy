@@ -6,13 +6,19 @@ def kind = params.kind
 def ids = params.ids
 
 if(ids) {
-    // Treat single ID as array
-    if(!ids instanceof List) {
-        ids = [ids]
+    def entityIds = []
+
+    // Single ID
+    if(ids instanceof String) {
+        entityIds << ids
+    }
+    // Multiple IDs
+    else {
+        entityIds = ids
     }
     
-    ids.each { id ->
-        datastoreViewerService.deleteEntity(kind, id.toLong())
+    entityIds.each { entityId ->
+        datastoreViewerService.deleteEntity(kind, entityId.toLong())
     }
 }
 
