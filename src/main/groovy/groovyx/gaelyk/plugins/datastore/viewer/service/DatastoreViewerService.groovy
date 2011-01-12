@@ -45,7 +45,6 @@ class DatastoreViewerService {
         Pagination pagination = new Pagination(offset, limit)
 
         List<Entity> kinds = datastore.getKinds()
-        kinds << new Entity("User", "User")
         entityBrowsingData.kinds = kinds
 
         // Use provided kind from parameter or first available kind
@@ -76,7 +75,16 @@ class DatastoreViewerService {
      * @return Selected kind
      */
     private determineSelectedKind(String kind, List<Entity> kinds) {
-        kind ? kind : kinds.get(0)?.key?.name
+        String selectedKind
+
+        if(kind) {
+            selectedKind = kind
+        }
+        else if(kinds.size() > 0) {
+            selectedKind = kinds.get(0)?.key?.name
+        }
+
+        selectedKind
     }
 
     /**

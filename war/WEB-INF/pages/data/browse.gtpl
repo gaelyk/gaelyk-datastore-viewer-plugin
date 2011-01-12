@@ -1,6 +1,7 @@
 <% include '/WEB-INF/includes/data/header.gtpl' %>
 <script type="text/javascript" src="/js/data/datastore-viewer.js"></script>
 
+<% if(request.kind != null) { %>
 <h2>Query</h2>
 
 <form name="queryForm" action="/data/browse" method="GET">
@@ -65,6 +66,9 @@
 </form>
 <% } else { %>
    No records available for this entity kind.
+<% } %>
+<% } else { %>
+   No entities available in datastore.
 <% } %>
 
 <% include '/WEB-INF/includes/data/footer.gtpl' %>

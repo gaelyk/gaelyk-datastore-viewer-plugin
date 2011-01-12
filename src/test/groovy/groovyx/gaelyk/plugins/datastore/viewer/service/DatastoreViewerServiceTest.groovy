@@ -54,9 +54,8 @@ class DatastoreViewerServiceTest {
         datastoreViewerService.datastore.put goal
 
         def entityBrowsingData = datastoreViewerService.getEntityBrowsingData("Goal", 0, 10)
-        assert entityBrowsingData.kinds.size() == 2
+        assert entityBrowsingData.kinds.size() == 1
         assert entityBrowsingData.kinds.get(0).key.name == "Goal"
-        assert entityBrowsingData.kinds.get(1).key.name == "User"
         assert entityBrowsingData.selectedKind == "Goal"
         assert entityBrowsingData.kindProperties.size() == 2
         assert entityBrowsingData.kindProperties.get(0).key.name == "description"
