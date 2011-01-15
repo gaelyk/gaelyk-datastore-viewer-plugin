@@ -125,3 +125,19 @@ A property representation query returns additional information on a property of 
 
     // Get specific property of kind "User"
     Entity property = datastore.getProperty("User", "name")
+
+## Plugin Access
+
+To make sure you protect access to the plugin's functionality you need to set appropriate security constraints.
+Google App Engine provides authentication and authorization via the [Google Accounts API](http://code.google.com/appengine/docs/java/users/).
+[Security constraints](http://code.google.com/appengine/docs/java/config/webxml.html#Security_and_Authentication) get
+defined in your web.xml. The following example only grants access to registered developers (administrators):
+
+    <security-constraint>
+       <web-resource-collection>
+          <url-pattern>/data/*</url-pattern>
+       </web-resource-collection>
+       <auth-constraint>
+          <role-name>admin</role-name>
+       </auth-constraint>
+    </security-constraint>
