@@ -11,7 +11,7 @@ binding {
     // Plugin library variable
     plugins = [
         datastoreviewer: [
-            version: "0.1"]
+            version: "0.2"]
         ]        
 }
 
@@ -20,6 +20,7 @@ routes {
     get  "/data/browse?kind=@kind", forward:  "/data/browseData.groovy?kind=@kind"
     get  "/data/edit/@kind/@id",    forward:  "/data/editData.groovy?kind=@kind&id=@id"
     post "/data/delete",            forward:  "/data/deleteData.groovy"
+    post "/data/update",            forward:  "/data/updateData.groovy"
 }
 
 categories MetaDataCategory
