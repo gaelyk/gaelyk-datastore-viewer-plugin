@@ -1,6 +1,5 @@
-import com.google.appengine.api.datastore.KeyFactory
 import com.google.appengine.api.datastore.Key
-import groovyx.gaelyk.plugins.datastore.viewer.category.MetaDataCategory
+import com.google.appengine.api.datastore.KeyFactory
 
 log.info "Editing data"
 
@@ -9,11 +8,8 @@ def id = Long.parseLong(params.id)
 
 Key key = KeyFactory.createKey(kind, id)
 def entity = datastore.get(key)
+def kindProperties = datastore.getProperties(kind)
 request.entity = entity
-
-use(MetaDataCategory) {
-    def kindProperties = datastore.getProperties(kind)
-    request.kindProperties = kindProperties
-}
+request.kindProperties = kindProperties
 
 forward '/WEB-INF/pages/data/edit.gtpl'
