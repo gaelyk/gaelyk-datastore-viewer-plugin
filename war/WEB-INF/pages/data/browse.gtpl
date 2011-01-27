@@ -46,7 +46,12 @@
          <% request.kindProperties.each { property -> %>
          <% def propertyValue = kind.getProperty(property.key.name) %>
          <% def propertyType = groovyx.gaelyk.plugins.datastore.viewer.data.DatastorePropertyType.getPropertyTypeForJavaType(propertyValue.class) %>
-            <td>${propertyType.formatValue(propertyValue)}</td>
+            <td>
+               ${propertyType.formatValue(propertyValue)}
+               <% if(propertyType == groovyx.gaelyk.plugins.datastore.viewer.data.DatastorePropertyType.DATASTORE_KEY) { %>
+               (${propertyValue.kind}:id=${propertyValue.id})
+               <% } %>
+            </td>
          <% } %>
       </tr>
       <% } %>
