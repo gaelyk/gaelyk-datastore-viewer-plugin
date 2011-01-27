@@ -44,7 +44,9 @@
          <td><input type="checkbox" name="ids" value="${kind.key.id}" onclick="javascript:checkDeleteButtonStatus('ids');"></td>
          <td><a href="/data/edit/${request.kind}/${kind.key.id}">${kind.key.id}</a></td>
          <% request.kindProperties.each { property -> %>
-            <td>${kind.getProperty(property.key.name)}</td>
+         <% def propertyValue = kind.getProperty(property.key.name) %>
+         <% def propertyType = groovyx.gaelyk.plugins.datastore.viewer.data.DatastorePropertyType.getPropertyTypeForJavaType(propertyValue.class) %>
+            <td>${propertyType.formatValue(propertyValue)}</td>
          <% } %>
       </tr>
       <% } %>
