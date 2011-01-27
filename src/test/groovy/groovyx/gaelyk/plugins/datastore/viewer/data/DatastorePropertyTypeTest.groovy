@@ -46,121 +46,126 @@ class DatastorePropertyTypeTest {
     }
 
     @Test
-    void testBooleanForFalse() {
+    void testFormatValueForBooleanFalse() {
         assert DatastorePropertyType.BOOLEAN.formatValue(false) == 'false'
     }
 
     @Test
-    void testBooleanForTrue() {
+    void testFormatValueForBooleanTrue() {
         assert DatastorePropertyType.BOOLEAN.formatValue(true) == 'true'
     }
 
     @Test
-    void testByteShort() {
+    void testFormatValueForByteShort() {
         byte[] bytes = 'test'.getBytes('UTF-8')
         assert DatastorePropertyType.BYTE_SHORT.formatValue(new ShortBlob(bytes)) == '<ShortBlob: 4 bytes>'
     }
 
     @Test
-    void testByteLong() {
+    void testFormatValueForByteLong() {
         byte[] bytes = 'test'.getBytes('UTF-8')
         assert DatastorePropertyType.BYTE_LONG.formatValue(new Blob(bytes)) == '<Blob: 4 bytes>'
     }
 
     @Test
-    void testCategory() {
+    void testFormatValueForCategory() {
         assert DatastorePropertyType.CATEGORY.formatValue(new Category('FUNNY')) == 'FUNNY'
     }
 
     @Test
-    void testDateAndTime() {
+    void testFormatValueForDateAndTime() {
         assert DatastorePropertyType.DATE_TIME.formatValue(new Date().parse("d/M/yyyy HH:mm:ss","21/3/2008 17:30:20")) == '2008-03-21 17:30:20'
     }
 
     @Test
-    void testEmail() {
+    void testFormatValueForEmail() {
         assert DatastorePropertyType.EMAIL.formatValue(new Email('foo@bar.com')) == 'foo@bar.com'
     }
 
     @Test
-    void testFloatForFloat() {
+    void testFormatValueForFloat() {
         assert DatastorePropertyType.FLOAT.formatValue(new Float(1.0)) == '1.0'
     }
 
     @Test
-    void testFloatForDouble() {
-        assert DatastorePropertyType.FLOAT.formatValue(new Double(1.0345)) == '1.0345'
+    void testFormatValueForDouble() {
+        assert DatastorePropertyType.DOUBLE.formatValue(new Double(1.0345)) == '1.0345'
     }
 
     @Test
-    void testGeoPoint() {
+    void testFormatValueForGeoPoint() {
         assert DatastorePropertyType.GEO_POINT.formatValue(new GeoPt(21.03F, 67.45F)) == '21.030001,67.449997'
     }
 
     @Test
-    void testGoogleAccountUser() {
+    void testFormatValueForGoogleAccountUser() {
         assert DatastorePropertyType.GOOGLE_ACCOUNT_USER.formatValue(new User('foo@bar.com', 'authDomain')) == 'foo@bar.com'
     }
 
     @Test
-    void testIntegerForShort() {
-        assert DatastorePropertyType.INTEGER.formatValue(Short.parseShort('1')) == '1'
+    void testFormatValueForShort() {
+        assert DatastorePropertyType.SHORT.formatValue(Short.parseShort('1')) == '1'
     }
 
     @Test
-    void testIntegerForInteger() {
+    void testFormatValueForInteger() {
         assert DatastorePropertyType.INTEGER.formatValue(new Integer(1)) == '1'
     }
 
     @Test
-    void testIntegerForLong() {
-        assert DatastorePropertyType.INTEGER.formatValue(new Long(1)) == '1'
+    void testFormatValueForLong() {
+        assert DatastorePropertyType.LONG.formatValue(new Long(1)) == '1'
     }
 
     @Test
-    void testBlobstoreKey() {
+    void testFormatValueForBlobstoreKey() {
         BlobKey key = new BlobKey("User")
         assert DatastorePropertyType.BLOBSTORE_KEY.formatValue(key) == '<BlobKey: User>'
     }
 
     @Test
-    void testDatastoreKey() {
+    void testFormatValueForDatastoreKey() {
         Key key = new Key("User", "User")
         assert DatastorePropertyType.DATASTORE_KEY.formatValue(key) == 'agR0ZXN0cg4LEgRVc2VyIgRVc2VyDA'
     }
 
     @Test
-    void testLink() {
+    void testFormatValueForLink() {
         assert DatastorePropertyType.LINK.formatValue(new Link('http://www.google.com')) == 'http://www.google.com'
     }
 
     @Test
-    void testMessageHandle() {
+    void testFormatValueForMessageHandle() {
         assert DatastorePropertyType.MESSAGING_HANDLE.formatValue(new IMHandle(new URL('http://www.google.com'), 'http://www.google.com')) == 'http://www.google.com'
     }
 
     @Test
-    void testPostalAddress() {
+    void testFormatValueForNull() {
+        assert DatastorePropertyType.NULL.formatValue(null) == null
+    }
+
+    @Test
+    void testFormatValueForPostalAddress() {
         assert DatastorePropertyType.POSTAL_ADDRESS.formatValue(new PostalAddress('Washington, DC')) == 'Washington, DC'
     }
 
     @Test
-    void testRating() {
+    void testFormatValueForRating() {
         assert DatastorePropertyType.RATING.formatValue(new Rating(5)) == '5'
     }
 
     @Test
-    void testPhoneNumber() {
+    void testFormatValueForPhoneNumber() {
         assert DatastorePropertyType.PHONE_NUMBER.formatValue(new PhoneNumber('567-345-5678')) == '567-345-5678'
     }
 
     @Test
-    void testTextShort() {
+    void testFormatValueForTextShort() {
         assert DatastorePropertyType.TEXT_SHORT.formatValue('123') == '123'
     }
 
     @Test
-    void testTextLong() {
+    void testFormatValueForTextLong() {
         assert DatastorePropertyType.TEXT_LONG.formatValue(new Text('123')) == '123'
     }
 }
