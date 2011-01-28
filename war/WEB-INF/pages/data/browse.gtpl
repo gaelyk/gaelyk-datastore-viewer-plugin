@@ -10,7 +10,7 @@
       <tr>
          <td>By Kind:</td>
          <td>
-            <select name="kind" onchange="javascript:document.queryForm.submit();">
+            <select id="kind" name="kind" onchange="javascript:document.queryForm.submit();">
                <% request.kinds.each { kind -> %>
                   <% if(request.kind == kind.key.name) { %>
                      <option value="${kind.key.name}" selected>${kind.key.name}</option>
@@ -19,6 +19,7 @@
                   <% } %>
                <% } %>
             </select>
+            <input type="button" name="create" value="Create" onclick="javascript:document.location.href='/data/create/' + document.getElementById('kind').value">
          </td>
       </tr>
    </tbody>
