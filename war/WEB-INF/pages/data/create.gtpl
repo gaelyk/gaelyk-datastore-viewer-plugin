@@ -10,8 +10,6 @@
 <table border="0">
   <tbody>
      <% request.kindProperties.eachWithIndex { property, index -> %>
-     <% def propertyValue = entity.getProperty(property.key.name) %>
-     <% def propertyType = groovyx.gaelyk.plugins.datastore.viewer.data.DatastorePropertyType.getPropertyTypeForJavaType(propertyValue.class) %>
      <tr>
         <td>
            <b>${property.key.name}</b><br>
@@ -22,12 +20,18 @@
                     <td>
                        <input type="hidden" name="name_${index}" value="${property.key.name}">
                        <input type="text" name="value_${index}" size="32">
-                       <input type="hidden" name="type_${index}" value="${propertyType}">
                     </td>
                  </tr>
                  <tr>
                     <td>Type:</td>
-                    <td>${propertyType.label}</td>
+                    <td>
+                       <select name="type_${index}">
+                          <% property.getProperty("property_representation").each { representation -> %>
+                             <% def propertyRepresentation = groovyx.gaelyk.plugins.datastore.viewer.data.PropertyRepresentation.valueOf(representation) %>
+                             <option value="${propertyRepresentation.datastorePropertyType}" selected>${propertyRepresentation.datastorePropertyType.label}</option>
+                         <% } %>
+                       </select>
+                    </td>
                  </tr>
               </tbody>
            </table>
