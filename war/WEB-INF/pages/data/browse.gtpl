@@ -50,7 +50,7 @@
             <td>
                ${propertyType.formatValue(propertyValue)}
                <% if(propertyType == groovyx.gaelyk.plugins.datastore.viewer.data.DatastorePropertyType.DATASTORE_KEY) { %>
-               (${propertyValue.kind}:id=${propertyValue.id})
+               (<a href="/data/edit/${propertyValue.kind}/${propertyValue.id}">${propertyValue.kind}:id=${propertyValue.id}</a>)
                <% } %>
             </td>
          <% } %>
@@ -60,10 +60,10 @@
    <tfoot>
       <tr>
          <td colspan="7">
-            <div style="float: left;">
+            <div class="left">
                <input type="submit" id="deleteButton" value="Delete" disabled>
              </div>
-             <div style="float: right;">
+             <div class="right">
                 <% include '/WEB-INF/includes/data/pagination.gtpl' %>
              </div>
          </td>

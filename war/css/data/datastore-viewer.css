@@ -31,3 +31,12 @@ table.striped th {
     font-size: 13px;
     font-weight: bold;
 }
+
+.left {
+    float: left;
+}
+
+.right {
+    float: right;
+    line-height: 1.9em;
+}
