@@ -58,13 +58,13 @@ class DatastorePropertyTypeTest {
     @Test
     void testFormatValueForByteShort() {
         byte[] bytes = 'test'.getBytes('UTF-8')
-        assert DatastorePropertyType.BYTE_SHORT.formatValue(new ShortBlob(bytes)) == '<ShortBlob: 4 bytes>'
+        assert DatastorePropertyType.BYTE_SHORT.formatValue(new ShortBlob(bytes)) == 'test'
     }
 
     @Test
     void testFormatValueForByteLong() {
         byte[] bytes = 'test'.getBytes('UTF-8')
-        assert DatastorePropertyType.BYTE_LONG.formatValue(new Blob(bytes)) == '<Blob: 4 bytes>'
+        assert DatastorePropertyType.BYTE_LONG.formatValue(new Blob(bytes)) == 'test'
     }
 
     @Test
@@ -136,7 +136,7 @@ class DatastorePropertyTypeTest {
 
     @Test
     void testFormatValueForMessageHandle() {
-        assert DatastorePropertyType.MESSAGING_HANDLE.formatValue(new IMHandle(new URL('http://www.google.com'), 'http://www.google.com')) == 'http://www.google.com'
+        assert DatastorePropertyType.MESSAGING_HANDLE.formatValue(new IMHandle(new URL('http://www.google.com'), 'http://www.test.com')) == 'http://www.google.com http://www.test.com'
     }
 
     @Test
@@ -167,6 +167,241 @@ class DatastorePropertyTypeTest {
     @Test
     void testFormatValueForTextLong() {
         assert DatastorePropertyType.TEXT_LONG.formatValue(new Text('123')) == '123'
+    }
+
+    @Test
+    void testParseValueForBooleanFalse() {
+        assert DatastorePropertyType.BOOLEAN.parseValue('false') == Boolean.FALSE
+    }
+
+    @Test
+    void testParseValueForBooleanTrue() {
+        assert DatastorePropertyType.BOOLEAN.parseValue('true') == Boolean.TRUE
+    }
+
+    @Test
+    void testParseValueForByteShort() {
+        assert DatastorePropertyType.BYTE_SHORT.parseValue('test') == new ShortBlob('test'.getBytes('UTF-8'))
+    }
+
+    @Test
+    void testParseValueForByteLong() {
+        assert DatastorePropertyType.BYTE_LONG.parseValue('test') == new Blob('test'.getBytes('UTF-8'))
+    }
+
+    @Test
+    void testParseValueForCategory() {
+        assert DatastorePropertyType.CATEGORY.parseValue('FUNNY') == new Category('FUNNY')
+    }
+
+    @Test
+    void testParseValueForDateAndTime() {
+        assert DatastorePropertyType.DATE_TIME.parseValue('2008-03-21 17:30:20') == new Date().parse("d/M/yyyy HH:mm:ss","21/3/2008 17:30:20")
+    }
+
+    @Test
+    void testParseValueForEmail() {
+        assert DatastorePropertyType.EMAIL.parseValue('foo@bar.com') == new Email('foo@bar.com')
+    }
+
+    @Test
+    void testParseValueForFloat() {
+        assert DatastorePropertyType.FLOAT.parseValue('1.0') == new Float(1.0)
+    }
+
+    @Test
+    void testParseValueForDouble() {
+        assert DatastorePropertyType.DOUBLE.parseValue('1.0345') == new Double(1.0345)
+    }
+
+    @Test
+    void testParseValueForGeoPoint() {
+        assert DatastorePropertyType.GEO_POINT.parseValue('21.030001,67.449997') == new GeoPt(21.030001, 67.449997)
+    }
+
+    @Test
+    void testParseValueForGoogleAccountUser() {
+        assert DatastorePropertyType.GOOGLE_ACCOUNT_USER.parseValue('foo@bar.com') == new User('foo@bar.com', '')
+    }
+
+    @Test
+    void testParseValueForShort() {
+        assert DatastorePropertyType.SHORT.parseValue('1') == Short.parseShort('1')
+    }
+
+    @Test
+    void testParseValueForInteger() {
+        assert DatastorePropertyType.INTEGER.parseValue('124') == new Integer(124)
+    }
+
+    @Test
+    void testParseValueForLong() {
+        assert DatastorePropertyType.LONG.parseValue('124345') == new Long(124345)
+    }
+
+    @Test
+    void testParseValueForBlobstoreKey() {
+        assert DatastorePropertyType.BLOBSTORE_KEY.parseValue('User') == new BlobKey('User')
+    }
+
+    @Test
+    void testParseValueForDatastoreKey() {
+        assert DatastorePropertyType.DATASTORE_KEY.parseValue('agR0ZXN0cg4LEgRVc2VyIgRVc2VyDA') == new Key("User", "User")
+    }
+
+    @Test
+    void testParseValueForLink() {
+        assert DatastorePropertyType.LINK.parseValue('http://www.google.com') == new Link('http://www.google.com')
+    }
+
+    @Test
+    void testParseValueForMessageHandle() {
+        assert DatastorePropertyType.MESSAGING_HANDLE.parseValue('http://www.google.com http://www.test.com') == new IMHandle(new URL('http://www.google.com'), 'http://www.test.com')
+    }
+
+    @Test
+    void testParseValueForNull() {
+        assert DatastorePropertyType.NULL.parseValue('') == null
+    }
+
+    @Test
+    void testParseValueForPostalAddress() {
+        assert DatastorePropertyType.POSTAL_ADDRESS.parseValue('Washington, DC') == new PostalAddress('Washington, DC')
+    }
+
+    @Test
+    void testParseValueForRating() {
+        assert DatastorePropertyType.RATING.parseValue('5') == new Rating(5)
+    }
+
+    @Test
+    void testParseValueForPhoneNumber() {
+        assert DatastorePropertyType.PHONE_NUMBER.parseValue('567-345-5678') == new PhoneNumber('567-345-5678')
+    }
+
+    @Test
+    void testParseValueForTextShort() {
+        assert DatastorePropertyType.TEXT_SHORT.parseValue('123') == '123'
+    }
+
+    @Test
+    void testParseValueForTextLong() {
+        assert DatastorePropertyType.TEXT_LONG.parseValue('123') == new Text('123')
+    }
+
+    @Test
+    void testGetPropertyTypeForJavaTypeForBoolean() {
+        assert DatastorePropertyType.getPropertyTypeForJavaType(Boolean.class) == DatastorePropertyType.BOOLEAN
+    }
+
+    @Test
+    void testGetPropertyTypeForJavaTypeForShortBlob() {
+        assert DatastorePropertyType.getPropertyTypeForJavaType(ShortBlob.class) == DatastorePropertyType.BYTE_SHORT
+    }
+
+    @Test
+    void testGetPropertyTypeForJavaTypeForBlob() {
+        assert DatastorePropertyType.getPropertyTypeForJavaType(Blob.class) == DatastorePropertyType.BYTE_LONG
+    }
+
+    @Test
+    void testGetPropertyTypeForJavaTypeForCategory() {
+        assert DatastorePropertyType.getPropertyTypeForJavaType(Category.class) == DatastorePropertyType.CATEGORY
+    }
+
+    @Test
+    void testGetPropertyTypeForJavaTypeForDate() {
+        assert DatastorePropertyType.getPropertyTypeForJavaType(Date.class) == DatastorePropertyType.DATE_TIME
+    }
+
+    @Test
+    void testGetPropertyTypeForJavaTypeForEmail() {
+        assert DatastorePropertyType.getPropertyTypeForJavaType(Email.class) == DatastorePropertyType.EMAIL
+    }
+
+    @Test
+    void testGetPropertyTypeForJavaTypeForFloat() {
+        assert DatastorePropertyType.getPropertyTypeForJavaType(Float.class) == DatastorePropertyType.FLOAT
+    }
+
+    @Test
+    void testGetPropertyTypeForJavaTypeForDouble() {
+        assert DatastorePropertyType.getPropertyTypeForJavaType(Double.class) == DatastorePropertyType.DOUBLE
+    }
+
+    @Test
+    void testGetPropertyTypeForJavaTypeForGeoPt() {
+        assert DatastorePropertyType.getPropertyTypeForJavaType(GeoPt.class) == DatastorePropertyType.GEO_POINT
+    }
+
+    @Test
+    void testGetPropertyTypeForJavaTypeForUser() {
+        assert DatastorePropertyType.getPropertyTypeForJavaType(User.class) == DatastorePropertyType.GOOGLE_ACCOUNT_USER
+    }
+
+    @Test
+    void testGetPropertyTypeForJavaTypeForShort() {
+        assert DatastorePropertyType.getPropertyTypeForJavaType(Short.class) == DatastorePropertyType.SHORT
+    }
+
+    @Test
+    void testGetPropertyTypeForJavaTypeForInteger() {
+        assert DatastorePropertyType.getPropertyTypeForJavaType(Integer.class) == DatastorePropertyType.INTEGER
+    }
+
+    @Test
+    void testGetPropertyTypeForJavaTypeForLong() {
+        assert DatastorePropertyType.getPropertyTypeForJavaType(Long.class) == DatastorePropertyType.LONG
+    }
+
+    @Test
+    void testGetPropertyTypeForJavaTypeForBlobKey() {
+        assert DatastorePropertyType.getPropertyTypeForJavaType(BlobKey.class) == DatastorePropertyType.BLOBSTORE_KEY
+    }
+
+    @Test
+    void testGetPropertyTypeForJavaTypeForKey() {
+        assert DatastorePropertyType.getPropertyTypeForJavaType(Key.class) == DatastorePropertyType.DATASTORE_KEY
+    }
+
+    @Test
+    void testGetPropertyTypeForJavaTypeForLink() {
+        assert DatastorePropertyType.getPropertyTypeForJavaType(Link.class) == DatastorePropertyType.LINK
+    }
+
+    @Test
+    void testGetPropertyTypeForJavaTypeForIMHandle() {
+        assert DatastorePropertyType.getPropertyTypeForJavaType(IMHandle.class) == DatastorePropertyType.MESSAGING_HANDLE
+    }
+
+    @Test
+    void testGetPropertyTypeForJavaTypeForNull() {
+        assert DatastorePropertyType.getPropertyTypeForJavaType(null) == DatastorePropertyType.NULL
+    }
+
+    @Test
+    void testGetPropertyTypeForJavaTypeForPostalAddress() {
+        assert DatastorePropertyType.getPropertyTypeForJavaType(PostalAddress.class) == DatastorePropertyType.POSTAL_ADDRESS
+    }
+
+    @Test
+    void testGetPropertyTypeForJavaTypeForRating() {
+        assert DatastorePropertyType.getPropertyTypeForJavaType(Rating.class) == DatastorePropertyType.RATING
+    }
+
+    @Test
+    void testGetPropertyTypeForJavaTypeForPhoneNumber() {
+        assert DatastorePropertyType.getPropertyTypeForJavaType(PhoneNumber.class) == DatastorePropertyType.PHONE_NUMBER
+    }
+
+    @Test
+    void testGetPropertyTypeForJavaTypeForString() {
+        assert DatastorePropertyType.getPropertyTypeForJavaType(String.class) == DatastorePropertyType.TEXT_SHORT
+    }
+
+    @Test
+    void testGetPropertyTypeForJavaTypeForText() {
+        assert DatastorePropertyType.getPropertyTypeForJavaType(Text.class) == DatastorePropertyType.TEXT_LONG
     }
 }
 
