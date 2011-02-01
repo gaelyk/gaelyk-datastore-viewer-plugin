@@ -1,3 +1,5 @@
+<% import groovyx.gaelyk.plugins.datastore.viewer.data.DatastorePropertyType %>
+
 <% include '/WEB-INF/includes/data/header.gtpl' %>
 
 <%
@@ -16,7 +18,7 @@
   <tbody>
      <% request.kindProperties.eachWithIndex { property, index -> %>
      <% def propertyValue = entity.getProperty(property.key.name) %>
-     <% def propertyType = propertyValue == null ? groovyx.gaelyk.plugins.datastore.viewer.data.DatastorePropertyType.NULL : groovyx.gaelyk.plugins.datastore.viewer.data.DatastorePropertyType.getPropertyTypeForJavaType(propertyValue.class) %>
+     <% def propertyType = propertyValue == null ? DatastorePropertyType.NULL : DatastorePropertyType.getPropertyTypeForJavaType(propertyValue.class) %>
      <tr>
         <td>
            <b>${property.key.name}</b><br>

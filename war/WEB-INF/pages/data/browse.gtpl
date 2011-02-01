@@ -1,3 +1,5 @@
+<% import groovyx.gaelyk.plugins.datastore.viewer.data.DatastorePropertyType %>
+
 <% include '/WEB-INF/includes/data/header.gtpl' %>
 <script type="text/javascript" src="/js/data/datastore-viewer.js"></script>
 
@@ -46,10 +48,10 @@
          <td><a href="/data/edit/${request.kind}/${kind.key.id}">${kind.key.id}</a></td>
          <% request.kindProperties.each { property -> %>
          <% def propertyValue = kind.getProperty(property.key.name) %>
-         <% def propertyType = groovyx.gaelyk.plugins.datastore.viewer.data.DatastorePropertyType.getPropertyTypeForJavaType(propertyValue.class) %>
+         <% def propertyType = DatastorePropertyType.getPropertyTypeForJavaType(propertyValue.class) %>
             <td>
                ${propertyType.formatValue(propertyValue)}
-               <% if(propertyType == groovyx.gaelyk.plugins.datastore.viewer.data.DatastorePropertyType.DATASTORE_KEY) { %>
+               <% if(propertyType == DatastorePropertyType.DATASTORE_KEY) { %>
                (<a href="/data/edit/${propertyValue.kind}/${propertyValue.id}">${propertyValue.kind}:id=${propertyValue.id}</a>)
                <% } %>
             </td>

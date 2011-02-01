@@ -1,3 +1,5 @@
+<% import groovyx.gaelyk.plugins.datastore.viewer.data.PropertyRepresentation %>
+
 <% include '/WEB-INF/includes/data/header.gtpl' %>
 
 <%
@@ -26,9 +28,9 @@
                     <td>Type:</td>
                     <td>
                        <select name="type_${index}">
-                          <option value="${groovyx.gaelyk.plugins.datastore.viewer.data.PropertyRepresentation.NULL}">Null</option>
+                          <option value="${PropertyRepresentation.NULL}">Null</option>
                           <% property.getProperty("property_representation").each { representation -> %>
-                             <% def propertyRepresentation = groovyx.gaelyk.plugins.datastore.viewer.data.PropertyRepresentation.valueOf(representation) %>
+                             <% def propertyRepresentation = PropertyRepresentation.valueOf(representation) %>
                              <option value="${propertyRepresentation.datastorePropertyType}" selected>${propertyRepresentation.datastorePropertyType.label}</option>
                          <% } %>
                        </select>
