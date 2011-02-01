@@ -23,7 +23,7 @@ package groovyx.gaelyk.plugins.datastore.viewer.data
 enum PropertyRepresentation {
     STRING(DatastorePropertyType.TEXT_SHORT), INT64(DatastorePropertyType.INTEGER), DOUBLE(DatastorePropertyType.DOUBLE),
     BOOLEAN(DatastorePropertyType.BOOLEAN), USER(DatastorePropertyType.GOOGLE_ACCOUNT_USER), REFERENCE(DatastorePropertyType.DATASTORE_KEY),
-    POINT(DatastorePropertyType.GEO_POINT)
+    POINT(DatastorePropertyType.GEO_POINT), NULL(DatastorePropertyType.NULL)
 
     final DatastorePropertyType datastorePropertyType
 

@@ -16,7 +16,7 @@
   <tbody>
      <% request.kindProperties.eachWithIndex { property, index -> %>
      <% def propertyValue = entity.getProperty(property.key.name) %>
-     <% def propertyType = groovyx.gaelyk.plugins.datastore.viewer.data.DatastorePropertyType.getPropertyTypeForJavaType(propertyValue.class) %>
+     <% def propertyType = propertyValue == null ? groovyx.gaelyk.plugins.datastore.viewer.data.DatastorePropertyType.NULL : groovyx.gaelyk.plugins.datastore.viewer.data.DatastorePropertyType.getPropertyTypeForJavaType(propertyValue.class) %>
      <tr>
         <td>
            <b>${property.key.name}</b><br>

@@ -57,4 +57,9 @@ class PropertyRepresentationTest {
     void testGetDatastorePropertyTypeForPoint() {
         assert PropertyRepresentation.POINT.datastorePropertyType == DatastorePropertyType.GEO_POINT
     }
+
+    @Test
+    void testGetDatastorePropertyTypeForNull() {
+        assert PropertyRepresentation.NULL.datastorePropertyType == DatastorePropertyType.NULL
+    }
 }
