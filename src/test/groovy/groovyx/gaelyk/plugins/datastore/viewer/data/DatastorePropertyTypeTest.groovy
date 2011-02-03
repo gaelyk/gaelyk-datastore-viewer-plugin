@@ -141,7 +141,7 @@ class DatastorePropertyTypeTest {
 
     @Test
     void testFormatValueForNull() {
-        assert DatastorePropertyType.NULL.formatValue(null) == '<null>'
+        assert DatastorePropertyType.NULL.formatValue(null) == '&lt;null&gt;'
     }
 
     @Test

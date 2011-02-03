@@ -28,7 +28,9 @@
                     <td>Type:</td>
                     <td>
                        <select name="type_${index}">
-                          <option value="${PropertyRepresentation.NULL}">Null</option>
+                          <% if(!property.getProperty("property_representation").contains('NULL')) { %>
+                             <option value="${PropertyRepresentation.NULL}">Null</option>
+                          <% } %>
                           <% property.getProperty("property_representation").each { representation -> %>
                              <% def propertyRepresentation = PropertyRepresentation.valueOf(representation) %>
                              <option value="${propertyRepresentation.datastorePropertyType}" selected>${propertyRepresentation.datastorePropertyType.label}</option>

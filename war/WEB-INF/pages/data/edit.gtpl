@@ -19,6 +19,7 @@
      <% request.kindProperties.eachWithIndex { property, index -> %>
      <% def propertyValue = entity.getProperty(property.key.name) %>
      <% def propertyType = propertyValue == null ? DatastorePropertyType.NULL : DatastorePropertyType.getPropertyTypeForJavaType(propertyValue.class) %>
+     <% def formattedPropertyValue = propertyType == DatastorePropertyType.NULL ? '' : propertyType.formatValue(propertyValue) %>
      <tr>
         <td>
            <b>${property.key.name}</b><br>
@@ -28,7 +29,7 @@
                     <td>Value:</td>
                     <td>
                        <input type="hidden" name="name_${index}" value="${property.key.name}">
-                       <input type="text" name="value_${index}" size="32" value="${propertyType.formatValue(propertyValue)}">
+                       <input type="text" name="value_${index}" size="32" value="${formattedPropertyValue}">
                        <input type="hidden" name="type_${index}" value="${propertyType}">
                     </td>
                  </tr>

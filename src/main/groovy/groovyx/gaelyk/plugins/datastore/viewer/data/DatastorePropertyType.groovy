@@ -42,7 +42,7 @@ enum DatastorePropertyType {
     DATASTORE_KEY("Key, Datastore", Key.class, { _this, value -> KeyFactory.keyToString(value) }, { _this, value -> KeyFactory.stringToKey(value) }),
     LINK("Link", Link.class, { _this, value -> value.toString() }, { _this, value -> new Link(value) }),
     MESSAGING_HANDLE("Messaging Handle", IMHandle.class, { _this, value -> value.toDatastoreString() }, { _this, value -> IMHandle.fromDatastoreString(value) }),
-    NULL("Null", null, { _this, value -> "<null>" }, { _this, value -> null }),
+    NULL("Null", null, { _this, value -> "&lt;null&gt;" }, { _this, value -> null }),
     POSTAL_ADDRESS("Postal Address", PostalAddress.class, { _this, value -> value.address }, { _this, value -> new PostalAddress(value) }),
     RATING("Rating", Rating.class, { _this, value -> Integer.toString(value.rating) }, { _this, value -> new Rating(value.toInteger()) }),
     PHONE_NUMBER("Phone Number", PhoneNumber.class, { _this, value -> value.number }, { _this, value -> new PhoneNumber(value) }),

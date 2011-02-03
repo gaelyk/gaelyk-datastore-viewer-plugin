@@ -48,7 +48,7 @@
          <td><a href="/data/edit/${request.kind}/${kind.key.id}">${kind.key.id}</a></td>
          <% request.kindProperties.each { property -> %>
          <% def propertyValue = kind.getProperty(property.key.name) %>
-         <% def propertyType = DatastorePropertyType.getPropertyTypeForJavaType(propertyValue.class) %>
+         <% def propertyType = propertyValue == null ? DatastorePropertyType.NULL : DatastorePropertyType.getPropertyTypeForJavaType(propertyValue.class) %>
             <td>
                ${propertyType.formatValue(propertyValue)}
                <% if(propertyType == DatastorePropertyType.DATASTORE_KEY) { %>
