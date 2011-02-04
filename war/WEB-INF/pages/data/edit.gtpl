@@ -30,12 +30,26 @@
                     <td>
                        <input type="hidden" name="name_${index}" value="${property.key.name}">
                        <input type="text" name="value_${index}" size="32" value="${formattedPropertyValue}">
-                       <input type="hidden" name="type_${index}" value="${propertyType}">
                     </td>
                  </tr>
                  <tr>
                     <td>Type:</td>
-                    <td>${propertyType.label}</td>
+                    <td>
+                       <select name="type_${index}">
+                          <% if(propertyType != DatastorePropertyType.NULL) { %>
+                             <option value="${DatastorePropertyType.NULL}">Null</option>
+                             <option value="${propertyType}" selected>${propertyType.label}</option>
+                          <% } else { %>
+                             <% DatastorePropertyType.values().each { datastorePropertyType -> %>
+                                <% if(datastorePropertyType == propertyType) { %>
+                                   <option value="${datastorePropertyType}" selected>${datastorePropertyType.label}</option>
+                                <% } else { %>
+                                   <option value="${datastorePropertyType}">${datastorePropertyType.label}</option>
+                                <% } %>
+                             <% } %>
+                          <% } %>
+                       </select>
+                    </td>
                  </tr>
               </tbody>
            </table>
