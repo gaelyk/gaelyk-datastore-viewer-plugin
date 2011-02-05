@@ -30,6 +30,9 @@
                     <td>
                        <input type="hidden" name="name_${index}" value="${property.key.name}">
                        <input type="text" name="value_${index}" size="32" value="${formattedPropertyValue}">
+                       <% if(propertyType == DatastorePropertyType.DATASTORE_KEY) { %>
+                          (<a href="/data/edit/${propertyValue.kind}/${propertyValue.id}">${propertyValue.kind}:id=${propertyValue.id}</a>)
+                       <% } %>
                     </td>
                  </tr>
                  <tr>
