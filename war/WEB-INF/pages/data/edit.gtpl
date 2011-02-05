@@ -22,7 +22,7 @@
      <% def formattedPropertyValue = propertyType == DatastorePropertyType.NULL ? '' : propertyType.formatValue(propertyValue) %>
      <tr>
         <td>
-           <b>${property.key.name}</b><br>
+           <b>${property.key.name}</b><span id="hint_${index}" class="hint"><% if(propertyType.hint != null) { %>${propertyType.hint}<% } %></span><br>
            <table>
               <tbody>
                  <tr>

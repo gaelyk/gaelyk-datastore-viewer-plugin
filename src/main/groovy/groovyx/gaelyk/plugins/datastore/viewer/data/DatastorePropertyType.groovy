@@ -25,29 +25,29 @@ import com.google.appengine.api.datastore.*
  * @author Benjamin Muschko
  */
 enum DatastorePropertyType {
-    BOOLEAN("Boolean", Boolean.class, { _this, value -> value.toString() }, { _this, value -> Boolean.valueOf(value) }),
-    BYTE_SHORT("Byte, short", ShortBlob.class, { _this, value -> new String(value.getBytes(), 'UTF-8') }, { _this, value -> new ShortBlob(value.getBytes('UTF-8')) }),
-    BYTE_LONG("Byte, long", Blob.class, { _this, value -> new String(value.getBytes(), 'UTF-8') }, { _this, value -> new Blob(value.getBytes('UTF-8')) }),
-    CATEGORY("Category", Category.class, { _this, value -> value.category }, { _this, value -> new Category(value) }),
-    DATE_TIME("Date & Time", Date.class, { _this, value -> value.format('yyyy-MM-dd HH:mm:ss') }, { _this, value -> new Date().parse("yyyy-MM-dd HH:mm:ss",value) }),
-    EMAIL("Email Address", Email.class, { _this, value -> value.email }, { _this, value -> new Email(value) }),
-    FLOAT("Float", Float.class, { _this, value -> value.toString() }, { _this, value -> Float.valueOf(value) }),
-    DOUBLE("Double", Double.class, { _this, value -> value.toString() }, { _this, value ->  Double.valueOf(value) }),
-    GEO_POINT("Geographical Point", GeoPt.class, { _this, value -> value.toString() }, { _this, value -> def latLong = value.split(','); new GeoPt(latLong[0].trim().toFloat(), latLong[1].trim().toFloat()) }),
-    GOOGLE_ACCOUNT_USER("Google Account User", User.class, { _this, value -> value.getEmail() }, { _this, value -> new User(value, '') }),
-    SHORT("Short", Short.class, { _this, value -> value.toString() }, { _this, value -> Short.valueOf(value) }),
-    INTEGER("Integer", Integer.class, { _this, value -> value.toString() }, { _this, value -> Integer.valueOf(value) }),
-    LONG("Long", Long.class, { _this, value -> value.toString() }, { _this, value -> Long.valueOf(value) }),
-    BLOBSTORE_KEY("Key, Blobstore", BlobKey.class, { _this, value -> value.toString() }, { _this, value -> new BlobKey(value) }),
-    DATASTORE_KEY("Key, Datastore", Key.class, { _this, value -> KeyFactory.keyToString(value) }, { _this, value -> KeyFactory.stringToKey(value) }),
-    LINK("Link", Link.class, { _this, value -> value.toString() }, { _this, value -> new Link(value) }),
-    MESSAGING_HANDLE("Messaging Handle", IMHandle.class, { _this, value -> value.toDatastoreString() }, { _this, value -> IMHandle.fromDatastoreString(value) }),
-    NULL("Null", null, { _this, value -> "&lt;null&gt;" }, { _this, value -> null }),
-    POSTAL_ADDRESS("Postal Address", PostalAddress.class, { _this, value -> value.address }, { _this, value -> new PostalAddress(value) }),
-    RATING("Rating", Rating.class, { _this, value -> Integer.toString(value.rating) }, { _this, value -> new Rating(value.toInteger()) }),
-    PHONE_NUMBER("Phone Number", PhoneNumber.class, { _this, value -> value.number }, { _this, value -> new PhoneNumber(value) }),
-    TEXT_SHORT("Text, short", String.class, { _this, value -> value.toString() }, { _this, value -> value }),
-    TEXT_LONG("Text, long", Text.class, { _this, value -> value.value }, { _this, value -> new Text(value) })
+    BOOLEAN("Boolean", Boolean.class, null, { _this, value -> value.toString() }, { _this, value -> Boolean.valueOf(value) }),
+    BYTE_SHORT("Byte, short", ShortBlob.class, null, { _this, value -> new String(value.getBytes(), 'UTF-8') }, { _this, value -> new ShortBlob(value.getBytes('UTF-8')) }),
+    BYTE_LONG("Byte, long", Blob.class, null, { _this, value -> new String(value.getBytes(), 'UTF-8') }, { _this, value -> new Blob(value.getBytes('UTF-8')) }),
+    CATEGORY("Category", Category.class, null, { _this, value -> value.category }, { _this, value -> new Category(value) }),
+    DATE_TIME("Date & Time", Date.class, "yyyy-MM-dd HH:mm:ss", { _this, value -> value.format('yyyy-MM-dd HH:mm:ss') }, { _this, value -> new Date().parse("yyyy-MM-dd HH:mm:ss",value) }),
+    EMAIL("Email Address", Email.class, null, { _this, value -> value.email }, { _this, value -> new Email(value) }),
+    FLOAT("Float", Float.class, null, { _this, value -> value.toString() }, { _this, value -> Float.valueOf(value) }),
+    DOUBLE("Double", Double.class, null, { _this, value -> value.toString() }, { _this, value ->  Double.valueOf(value) }),
+    GEO_POINT("Geographical Point", GeoPt.class, "latitude,longitude", { _this, value -> value.toString() }, { _this, value -> def latLong = value.split(','); new GeoPt(latLong[0].trim().toFloat(), latLong[1].trim().toFloat()) }),
+    GOOGLE_ACCOUNT_USER("Google Account User", User.class, null, { _this, value -> value.getEmail() }, { _this, value -> new User(value, '') }),
+    SHORT("Short", Short.class, null, { _this, value -> value.toString() }, { _this, value -> Short.valueOf(value) }),
+    INTEGER("Integer", Integer.class, null, { _this, value -> value.toString() }, { _this, value -> Integer.valueOf(value) }),
+    LONG("Long", Long.class, null, { _this, value -> value.toString() }, { _this, value -> Long.valueOf(value) }),
+    BLOBSTORE_KEY("Key, Blobstore", BlobKey.class, null, { _this, value -> value.toString() }, { _this, value -> new BlobKey(value) }),
+    DATASTORE_KEY("Key, Datastore", Key.class, null, { _this, value -> KeyFactory.keyToString(value) }, { _this, value -> KeyFactory.stringToKey(value) }),
+    LINK("Link", Link.class, "Must be a valid URL.", { _this, value -> value.toString() }, { _this, value -> new Link(value) }),
+    MESSAGING_HANDLE("Messaging Handle", IMHandle.class, null, { _this, value -> value.toDatastoreString() }, { _this, value -> IMHandle.fromDatastoreString(value) }),
+    NULL("Null", null, null, { _this, value -> "&lt;null&gt;" }, { _this, value -> null }),
+    POSTAL_ADDRESS("Postal Address", PostalAddress.class, null, { _this, value -> value.address }, { _this, value -> new PostalAddress(value) }),
+    RATING("Rating", Rating.class, null, { _this, value -> Integer.toString(value.rating) }, { _this, value -> new Rating(value.toInteger()) }),
+    PHONE_NUMBER("Phone Number", PhoneNumber.class, null, { _this, value -> value.number }, { _this, value -> new PhoneNumber(value) }),
+    TEXT_SHORT("Text, short", String.class, null, { _this, value -> value.toString() }, { _this, value -> value }),
+    TEXT_LONG("Text, long", Text.class, null, { _this, value -> value.value }, { _this, value -> new Text(value) })
 
     static final Map propertyTypes
 
@@ -61,12 +61,14 @@ enum DatastorePropertyType {
 
     final String label
     final Class javaType
+    final String hint
     final Closure formatValue
     final Closure parseValue
 
-    DatastorePropertyType(String label, Class javaType, Closure formatValueClosure, Closure parseValueClosure) {
+    DatastorePropertyType(String label, Class javaType, String hint, Closure formatValueClosure, Closure parseValueClosure) {
         this.label = label
         this.javaType = javaType
+        this.hint = hint
         formatValue = formatValueClosure.curry(this)
         parseValue = parseValueClosure.curry(this)
     }

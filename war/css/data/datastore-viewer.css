@@ -40,3 +40,9 @@ table.striped th {
     float: right;
     line-height: 1.9em;
 }
+
+.hint {
+    font-size: 11px;
+    color: #A9A9A9;
+    padding-left: 10px;
+}
