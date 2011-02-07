@@ -62,7 +62,7 @@
      <% } %>
   </tbody>
 </table>
-<input type="submit" value="Update" name="Update">&nbsp;<input type="button" value="Cancel" name="Cancel" onclick="javascript:document.location.href='/data/browse?kind=${entity.kind}'">
+<input type="submit" value="Update" name="Update">&nbsp;<input type="button" value="Cancel" name="Cancel" onclick="javascript:document.location.href='/data/browse?kind=${entity.kind}&namespace=${request.namespace}'">
 </form>
 
 <% include '/WEB-INF/includes/data/footer.gtpl' %>

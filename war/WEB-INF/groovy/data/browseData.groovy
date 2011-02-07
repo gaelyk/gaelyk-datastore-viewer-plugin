@@ -2,14 +2,20 @@ import groovyx.gaelyk.plugins.datastore.viewer.data.EntityBrowsingData
 
 log.info "Browsing data"
 
+def selectedNamespace = params.namespace
 def kind = params.kind
 def offset = params.offset?.toInteger()
 def limit = params.limit?.toInteger()
 
-EntityBrowsingData entityBrowsingData = datastoreViewerService.getEntityBrowsingData(kind, offset, limit)
-request.kinds = entityBrowsingData.kinds
-request.kind = entityBrowsingData.selectedKind
-request.kindProperties = entityBrowsingData.kindProperties
-request.page = entityBrowsingData.entityPage
+selectedNamespace = selectedNamespace ? selectedNamespace : ''
+request.namespace = selectedNamespace
+
+namespace.of(selectedNamespace) {
+    EntityBrowsingData entityBrowsingData = datastoreViewerService.getEntityBrowsingData(kind, offset, limit)
+    request.kinds = entityBrowsingData.kinds
+    request.kind = entityBrowsingData.selectedKind
+    request.kindProperties = entityBrowsingData.kindProperties
+    request.page = entityBrowsingData.entityPage
+}
 
 forward '/WEB-INF/pages/data/browse.gtpl'

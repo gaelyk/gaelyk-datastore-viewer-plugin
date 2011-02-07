@@ -21,4 +21,4 @@ for(i in 0..numberOfFields - 1) {
 
 entity.save()
 
-redirect '/data/browse'
+redirect "/data/browse?kind=${entity.kind}&namespace=${entity.namespace}"

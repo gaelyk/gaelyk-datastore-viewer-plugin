@@ -4,19 +4,22 @@ import groovyx.gaelyk.plugins.datastore.viewer.data.DatastorePropertyType
 log.info "Inserting data"
 
 def kind = params.kind
+def selectedNamespace = params.namespace
 def numberOfFields = params.size() - 1 == 0 ? 0 : (params.size() - 1) / 3
 
-def entity = new Entity(kind)
+namespace.of(selectedNamespace) {
+    def entity = new Entity(kind)
 
-for(i in 0..numberOfFields - 1) {
-    def name = params["name_${i}"]
-    def value = params["value_${i}"]
-    def type = params["type_${i}"]
+    for(i in 0..numberOfFields - 1) {
+        def name = params["name_${i}"]
+        def value = params["value_${i}"]
+        def type = params["type_${i}"]
 
-    DatastorePropertyType datastorePropertyType = DatastorePropertyType.valueOf(type)
-    entity[name] = datastorePropertyType.parseValue(value)
+        DatastorePropertyType datastorePropertyType = DatastorePropertyType.valueOf(type)
+        entity[name] = datastorePropertyType.parseValue(value)
+    }
+
+    entity.save()
 }
 
-entity.save()
-
-redirect '/data/browse'
+redirect "/data/browse?kind=${kind}&namespace=${selectedNamespace}"

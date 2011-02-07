@@ -12,7 +12,7 @@
       <tr>
          <td>By Kind:</td>
          <td>
-            <select id="kind" name="kind" onchange="javascript:document.queryForm.submit();">
+            <select id="kind" name="kind">
                <% request.kinds.each { kind -> %>
                   <% if(request.kind == kind.key.name) { %>
                      <option value="${kind.key.name}" selected>${kind.key.name}</option>
@@ -21,7 +21,22 @@
                   <% } %>
                <% } %>
             </select>
-            <input type="button" name="create" value="Create" onclick="javascript:document.location.href='/data/create/' + document.getElementById('kind').value">
+         </td>
+      </tr>
+      <tr>
+         <td>Namespace:</td>
+         <td>
+            <input type="text" id="namespace" name="namespace" value="${request.namespace}">
+         </td>
+      </tr>
+      <tr>
+         <td colspan="2">
+            <input type="button" name="query" value="Query" onclick="javascript:document.queryForm.submit();">
+            <% if(request.kinds.size() > 0) { %>
+               <input type="button" name="create" value="Create" onclick="javascript:document.location.href='/data/create/' + document.getElementById('kind').value + '?namespace=' + document.getElementById('namespace').value">
+            <% } else { %>
+               <input type="button" name="create" value="Create" disabled>
+            <% } %>
          </td>
       </tr>
    </tbody>
@@ -45,7 +60,7 @@
       <% def trClass = index % 2 == 0 ? 'even' : 'odd' %>
       <tr class="${trClass}">
          <td><input type="checkbox" name="ids" value="${kind.key.id}" onclick="javascript:checkDeleteButtonStatus('ids');"></td>
-         <td><a href="/data/edit/${request.kind}/${kind.key.id}">${kind.key.id}</a></td>
+         <td><a href="/data/edit/${request.kind}/${kind.key.id}?namespace=${request.namespace}">${kind.key.id}</a></td>
          <% request.kindProperties.each { property -> %>
          <% def propertyValue = kind.getProperty(property.key.name) %>
          <% def propertyType = propertyValue == null ? DatastorePropertyType.NULL : DatastorePropertyType.getPropertyTypeForJavaType(propertyValue.class) %>
@@ -73,6 +88,7 @@
    </tfoot>
 </table>
 <input type="hidden" name="kind" value="${request.kind}">
+<input type="hidden" name="namespace" value="${request.namespace}">
 </form>
 <% } else { %>
    No records available for this entity kind.

@@ -11,6 +11,9 @@
 <form action="/data/insert/${kind}" method="post">
 <table border="0">
   <tbody>
+     <tr>
+       <td><b>Namespace:</b> <input type="text" name="namespace" value="${request.namespace}"></td>
+     </tr>
      <% request.kindProperties.eachWithIndex { property, index -> %>
      <tr>
         <td>
@@ -46,7 +49,7 @@
      <% } %>
   </tbody>
 </table>
-<input type="submit" value="Insert" name="Insert">&nbsp;<input type="button" value="Cancel" name="Cancel" onclick="javascript:document.location.href='/data/browse?kind=${kind}'">
+<input type="submit" value="Insert" name="Insert">&nbsp;<input type="button" value="Cancel" name="Cancel" onclick="javascript:document.location.href='/data/browse?kind=${kind}&namespace=${request.namespace}'">
 </form>
 
 <% include '/WEB-INF/includes/data/footer.gtpl' %>
