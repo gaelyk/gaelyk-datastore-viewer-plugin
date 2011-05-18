@@ -27,15 +27,15 @@ class Pagination {
     final int limit
 
     Pagination(Integer offset, Integer limit) {
-        this.offset = offset ? offset : DEFAULT_OFFSET
-        this.limit = limit ? limit : DEFAULT_LIMIT       
+        this.offset = offset ?: DEFAULT_OFFSET
+        this.limit = limit ?: DEFAULT_LIMIT
     }
 
     @Override
     public String toString() {
-        return "Pagination{" +
-               "offset=" + offset +
-               ", limit=" + limit +
-               '}' ;
+        "Pagination{" +
+        "offset=" + offset +
+        ", limit=" + limit +
+        '}' ;
     }
 }
