@@ -15,18 +15,18 @@
  */
 package groovyx.gaelyk.plugins.datastore.viewer.category
 
+import groovyx.gaelyk.GaelykCategory
 import org.junit.runners.BlockJUnit4ClassRunner
 import org.junit.runners.model.FrameworkMethod
 import org.junit.runners.model.Statement
-import groovyx.gaelyk.GaelykCategory
 
 /**
- * JUnitRunner for metadata category. It also mixes in the GaelykCategory.
+ * JUnitRunner for Gaelyk category.
  *
  * @author Benjamin Muschko
  */
-class MetaDataCategoryJUnitRunner extends BlockJUnit4ClassRunner {
-    public MetaDataCategoryJUnitRunner(Class klass) {
+class GaelykCategoryJUnitRunner extends BlockJUnit4ClassRunner {
+    public GaelykCategoryJUnitRunner(Class klass) {
         super(klass)
     }
 
@@ -34,7 +34,7 @@ class MetaDataCategoryJUnitRunner extends BlockJUnit4ClassRunner {
         def stmt = super.methodBlock(method);
 
         return {
-            use([MetaDataCategory, GaelykCategory]) {
+            use([GaelykCategory]) {
                 stmt.evaluate()
             }
         } as Statement

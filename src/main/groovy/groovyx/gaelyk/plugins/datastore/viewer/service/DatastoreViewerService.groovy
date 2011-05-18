@@ -15,8 +15,8 @@
  */
 package groovyx.gaelyk.plugins.datastore.viewer.service
 
+import groovyx.gaelyk.GaelykCategory
 import groovyx.gaelyk.logging.GroovyLogger
-import groovyx.gaelyk.plugins.datastore.viewer.category.MetaDataCategory
 import groovyx.gaelyk.plugins.datastore.viewer.data.EntityBrowsingData
 import groovyx.gaelyk.plugins.datastore.viewer.pagination.EntityPage
 import groovyx.gaelyk.plugins.datastore.viewer.pagination.Pagination
@@ -27,7 +27,7 @@ import com.google.appengine.api.datastore.*
  *
  * @author Benjamin Muschko
  */
-@Mixin(MetaDataCategory)
+@Mixin(GaelykCategory)
 class DatastoreViewerService {
     def log = new GroovyLogger("groovyx.gaelyk.plugins.datastore.viewer.service.DatastoreViewerService")
     def datastore = DatastoreServiceFactory.datastoreService

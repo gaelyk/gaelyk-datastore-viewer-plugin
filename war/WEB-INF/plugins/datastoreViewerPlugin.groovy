@@ -1,8 +1,5 @@
-import groovyx.gaelyk.logging.GroovyLogger
-import groovyx.gaelyk.plugins.datastore.viewer.category.MetaDataCategory
 import groovyx.gaelyk.plugins.datastore.viewer.service.DatastoreViewerService
 
-def log = new GroovyLogger("datastoreViewerPlugin")
 log.info "Registering datastore viewer plugin..."
 
 binding {
@@ -24,5 +21,3 @@ routes {
     get  "/data/create/@kind",      forward:  "/data/createData.groovy?kind=@kind"
     post "/data/insert/@kind",      forward:  "/data/insertData.groovy?kind=@kind"
 }
-
-categories MetaDataCategory

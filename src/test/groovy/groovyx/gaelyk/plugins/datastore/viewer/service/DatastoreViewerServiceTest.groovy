@@ -17,7 +17,7 @@ package groovyx.gaelyk.plugins.datastore.viewer.service
 
 import com.google.appengine.tools.development.testing.LocalDatastoreServiceTestConfig
 import com.google.appengine.tools.development.testing.LocalServiceTestHelper
-import groovyx.gaelyk.plugins.datastore.viewer.category.MetaDataCategoryJUnitRunner
+import groovyx.gaelyk.plugins.datastore.viewer.category.GaelykCategoryJUnitRunner
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -29,7 +29,7 @@ import com.google.appengine.api.datastore.*
  *
  * @author Benjamin Muschko
  */
-@RunWith(MetaDataCategoryJUnitRunner.class)
+@RunWith(GaelykCategoryJUnitRunner.class)
 class DatastoreViewerServiceTest {
     def helper = new LocalServiceTestHelper(new LocalDatastoreServiceTestConfig())
     def datastoreViewerService
