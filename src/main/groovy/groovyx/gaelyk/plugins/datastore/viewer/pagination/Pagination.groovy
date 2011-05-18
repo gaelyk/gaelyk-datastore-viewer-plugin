@@ -23,8 +23,8 @@ package groovyx.gaelyk.plugins.datastore.viewer.pagination
 class Pagination {
     static final int DEFAULT_OFFSET = 0
     static final int DEFAULT_LIMIT = 10
-    final int offset;
-    final int limit;
+    final int offset
+    final int limit
 
     Pagination(Integer offset, Integer limit) {
         this.offset = offset ? offset : DEFAULT_OFFSET
