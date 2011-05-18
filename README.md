@@ -27,12 +27,11 @@ about the plugin itself:
 
 ### Metadata Queries
 
-Querying for metadata looks similar to querying the datastore for entities using specific query types. To make it easier
-to retrieve metadata provides a Groovy category named `MetaDataCategory`. You can query the datastore for namespaces, entity kinds,
-its properties. The category directly applies to the `DatastoreService` object. By default the result list always returns
-all entities. However, you can restrict your result set by defining `FetchOptions` as parameter. Moreover, you can confine
-your result set by applying filters to your query. The following code snippets show the API by example. You can find more
-detailed examples in the unit test class for this category named `MetaDataCategoryTest`. 
+Querying for metadata looks similar to querying the datastore for entities using specific query types. Gaelyk 0.7 provides
+support to [retrieve metadata](http://gaelyk.appspot.com/tutorial/app-engine-shortcuts#metadata) via the `GaelykCategory`.
+You can query the datastore for namespaces, entity kinds, its properties. The category directly applies to the `DatastoreService` object.
+By default the result list always returns all entities. However, you can restrict your result set by defining `FetchOptions` as parameter. Moreover, you can confine
+your result set by applying filters to your query. The following code snippets show the API by example.
 
 #### Namespaces
 

@@ -1,14 +1,7 @@
 apply plugin: 'groovy'
 apply plugin: 'idea'
-version = '0.2'
+version = '0.3'
 defaultTasks 'clean', 'build', 'dist'
-ant.property(environment: 'env')
-
-if(!ant.properties['env.GRADLE_HOME']) {
-    throw new Exception('Please set $GRADLE_HOME')
-}
-
-def gradleHomeDir = System.getenv().get('GRADLE_HOME')
 
 configurations {
     provided {
@@ -41,9 +34,9 @@ repositories {
 }
 
 dependencies {
-    def appEngineVersion = '1.4.0'
-    groovy group: 'org.codehaus.groovy', name: 'groovy', version: '1.7.+'
-    compile group: 'gaelyk', name: 'gaelyk', version: '0.6.1'
+    def appEngineVersion = '1.5.0'
+    groovy group: 'org.codehaus.groovy', name: 'groovy', version: '1.8.0'
+    compile group: 'gaelyk', name: 'gaelyk', version: '0.7'
     compile group: 'com.google.appengine', name: 'appengine-api-1.0-sdk', version: appEngineVersion
     compile group: 'com.google.appengine', name: 'appengine-api-labs', version: appEngineVersion
     testCompile group: 'com.google.appengine', name: 'appengine-api-stubs', version: appEngineVersion
@@ -74,7 +67,7 @@ ideaProject {
 
         // Set Gradle home
         def gradleSettings = node.appendNode('component', [name: 'GradleSettings'])
-        gradleSettings.appendNode('option', [name: 'SDK_HOME', value: gradleHomeDir])
+        gradleSettings.appendNode('option', [name: 'SDK_HOME', value: gradle.gradleHomeDir])
     }
 }
 

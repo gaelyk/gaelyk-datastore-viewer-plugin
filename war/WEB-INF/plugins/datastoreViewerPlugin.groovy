@@ -8,7 +8,7 @@ binding {
     // Plugin library variable
     plugins = [
         datastoreviewer: [
-            version: "0.2"]
+            version: "0.3"]
         ]        
 }
 
