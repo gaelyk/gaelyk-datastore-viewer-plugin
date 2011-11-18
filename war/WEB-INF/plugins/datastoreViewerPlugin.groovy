@@ -8,8 +8,8 @@ binding {
     // Plugin library variable
     plugins = [
         datastoreviewer: [
-            version: "0.3"]
-        ]        
+            version: "0.4"]
+        ]
 }
 
 routes {

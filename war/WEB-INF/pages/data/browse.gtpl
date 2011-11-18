@@ -1,51 +1,48 @@
 <% import groovyx.gaelyk.plugins.datastore.viewer.data.DatastorePropertyType %>
 
 <% include '/WEB-INF/includes/data/header.gtpl' %>
-<script type="text/javascript" src="/js/data/datastore-viewer.js"></script>
 
 <% if(request.kind != null) { %>
-<h2>Query</h2>
+<div class="page-header">
+    <h2>Query</h2>
+</div>
 
 <form name="queryForm" action="/data/browse" method="GET">
-<table>
-   <tbody>
-      <tr>
-         <td>By Kind:</td>
-         <td>
-            <select id="kind" name="kind">
-               <% request.kinds.each { kind -> %>
-                  <% if(request.kind == kind.key.name) { %>
-                     <option value="${kind.key.name}" selected>${kind.key.name}</option>
-                  <% } else { %>
-                     <option value="${kind.key.name}">${kind.key.name}</option>
-                  <% } %>
-               <% } %>
-            </select>
-         </td>
-      </tr>
-      <tr>
-         <td>Namespace:</td>
-         <td>
-            <input type="text" id="namespace" name="namespace" value="${request.namespace}">
-         </td>
-      </tr>
-      <tr>
-         <td colspan="2">
-            <input type="button" name="query" value="Query" onclick="javascript:document.queryForm.submit();">
+    <fieldset>
+        <div class="clearfix">
+            <label for="normalSelect">By Kind:</label>
+            <div class="input">
+                <select id="kind" name="kind" class="span5">
+                   <% request.kinds.each { kind -> %>
+                      <% if(request.kind == kind.key.name) { %>
+                         <option value="${kind.key.name}" selected>${kind.key.name}</option>
+                      <% } else { %>
+                         <option value="${kind.key.name}">${kind.key.name}</option>
+                      <% } %>
+                   <% } %>
+                </select>
+            </div>
+        </div>
+        <div class="clearfix">
+            <label>Namespace:</label>
+            <div class="input">
+                <input type="text" id="namespace" name="namespace" value="${request.namespace}" class="span5">
+            </div>
+        </div>
+        <div class="actions">
+            <input type="button" name="query" value="Query" class="btn primary" onclick="javascript:document.queryForm.submit();">
             <% if(request.kinds.size() > 0) { %>
-               <input type="button" name="create" value="Create" onclick="javascript:document.location.href='/data/create/' + document.getElementById('kind').value + '?namespace=' + document.getElementById('namespace').value">
+               <input type="button" name="create" value="Create" class="btn" onclick="javascript:document.location.href='/data/create/' + document.getElementById('kind').value + '?namespace=' + document.getElementById('namespace').value">
             <% } else { %>
-               <input type="button" name="create" value="Create" disabled>
+               <input type="button" name="create" value="Create" class="btn" disabled>
             <% } %>
-         </td>
-      </tr>
-   </tbody>
-</table>
+        </div>
+    </fieldset>
 </form>
 <form name="dataForm" action="/data/delete" method="POST">
-<b>${request.kind} Entities</b><br><br>
+<h4>${request.kind} Entities</h4><br><br>
 <% if(request.kindProperties.size() > 0) { %>
-<table border="1" class="striped">
+<table class="zebra-striped bordered-table">
    <thead>
       <tr>
          <th><input type="checkbox" id="idToggle" name="idToggle" onclick="javascript:toggleSelection('idToggle', 'ids');"></th>
@@ -78,7 +75,7 @@
       <tr>
          <td colspan="7">
             <div class="left">
-               <input type="submit" id="deleteButton" value="Delete" disabled>
+               <input type="submit" id="deleteButton" value="Delete" class="btn danger" disabled>
              </div>
              <div class="right">
                 <% include '/WEB-INF/includes/data/pagination.gtpl' %>
@@ -91,10 +88,10 @@
 <input type="hidden" name="namespace" value="${request.namespace}">
 </form>
 <% } else { %>
-   No records available for this entity kind.
+   <div class="alert-message block-message warning">No records available for this entity kind.</div>
 <% } %>
 <% } else { %>
-   No entities available in datastore.
+   <div class="alert-message block-message warning">No entities available in datastore.</div>
 <% } %>
 
 <% include '/WEB-INF/includes/data/footer.gtpl' %>

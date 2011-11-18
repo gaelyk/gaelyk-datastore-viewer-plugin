@@ -1,6 +1,6 @@
 apply plugin: 'groovy'
 apply plugin: 'idea'
-version = '0.3'
+version = '0.4'
 defaultTasks 'clean', 'build', 'dist'
 
 configurations {
@@ -29,7 +29,7 @@ repositories {
     mavenCentral()
     add(new org.apache.ivy.plugins.resolver.URLResolver()) {
         name = "GitHub"
-    	addArtifactPattern 'http://cloud.github.com/downloads/glaforge/[organisation]/[module]-[revision].[ext]'
+        addArtifactPattern 'http://cloud.github.com/downloads/glaforge/[organisation]/[module]-[revision].[ext]'
     }
 }
 

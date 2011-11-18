@@ -6,50 +6,45 @@
   def kind = request.kind
 %>
 
-<h2>Create Entity: ${kind}</h2>
+<div class="page-header">
+	<h2>Create Entity: ${kind}</h2>
+</div>
 
 <form action="/data/insert/${kind}" method="post">
-<table border="0">
-  <tbody>
-     <tr>
-       <td><b>Namespace:</b> <input type="text" name="namespace" value="${request.namespace}"></td>
-     </tr>
+	<p><span class="label notice">Notice</span> Enter information for the new entity below.</p>
+	<div class="alert-message block-message info">
+       <strong>Namespace:</strong>&nbsp;&nbsp;&nbsp;<input type="text" name="namespace" value="${request.namespace}">
+    </div>
+<fieldset>
      <% request.kindProperties.eachWithIndex { property, index -> %>
-     <tr>
-        <td>
-           <b>${property.key.name}</b><br>
-           <table>
-              <tbody>
-                 <tr>
-                    <td>Value:</td>
-                    <td>
-                       <input type="hidden" name="name_${index}" value="${property.key.name}">
-                       <input type="text" name="value_${index}" size="32">
-                    </td>
-                 </tr>
-                 <tr>
-                    <td>Type:</td>
-                    <td>
-                       <select name="type_${index}">
-                          <% if(!property.getProperty("property_representation").contains('NULL')) { %>
-                             <option value="${PropertyRepresentation.NULL}">Null</option>
-                          <% } %>
-                          <% property.getProperty("property_representation").each { representation -> %>
-                             <% def propertyRepresentation = PropertyRepresentation.valueOf(representation) %>
-                             <option value="${propertyRepresentation.datastorePropertyType}" selected>${propertyRepresentation.datastorePropertyType.label}</option>
-                         <% } %>
-                       </select>
-                    </td>
-                 </tr>
-              </tbody>
-           </table>
-        </td>
-     </tr>
-     <tr><td><br></td></tr>
+     <h4>${property.key.name}</h4>
+     <div class="clearfix">
+     	<label>Value:</label>
+        <div class="input">
+        	<input type="hidden" name="name_${index}" value="${property.key.name}">
+            <input type="text" name="value_${index}" size="32" class="span5">
+        </div>
+     </div>
+	 <div class="clearfix">
+     	<label>Type:</label>
+        <div class="input">
+        	<select name="type_${index}" class="span5">
+            	<% if(!property.getProperty("property_representation").contains('NULL')) { %>
+                	<option value="${PropertyRepresentation.NULL}">Null</option>
+                <% } %>
+                <% property.getProperty("property_representation").each { representation -> %>
+                	<% def propertyRepresentation = PropertyRepresentation.valueOf(representation) %>
+                    	<option value="${propertyRepresentation.datastorePropertyType}" selected>${propertyRepresentation.datastorePropertyType.label}</option>
+                    <% } %>
+            </select>
+        </div>
+     </div>
      <% } %>
-  </tbody>
-</table>
-<input type="submit" value="Insert" name="Insert">&nbsp;<input type="button" value="Cancel" name="Cancel" onclick="javascript:document.location.href='/data/browse?kind=${kind}&namespace=${request.namespace}'">
+</fieldset>
+<div class="actions">
+	<input type="submit" value="Insert" name="Insert" class="btn primary">
+	<input type="button" value="Cancel" name="Cancel" class="btn" onclick="javascript:document.location.href='/data/browse?kind=${kind}&namespace=${request.namespace}'">
+</div>
 </form>
 
 <% include '/WEB-INF/includes/data/footer.gtpl' %>
