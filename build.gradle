@@ -34,9 +34,9 @@ repositories {
 }
 
 dependencies {
-    def appEngineVersion = '1.5.0'
-    groovy group: 'org.codehaus.groovy', name: 'groovy', version: '1.8.0'
-    compile group: 'gaelyk', name: 'gaelyk', version: '0.7'
+    def appEngineVersion = '1.6.0'
+    groovy group: 'org.codehaus.groovy', name: 'groovy', version: '1.8.4'
+    compile group: 'gaelyk', name: 'gaelyk', version: '1.1'
     compile group: 'com.google.appengine', name: 'appengine-api-1.0-sdk', version: appEngineVersion
     compile group: 'com.google.appengine', name: 'appengine-api-labs', version: appEngineVersion
     testCompile group: 'com.google.appengine', name: 'appengine-api-stubs', version: appEngineVersion
@@ -55,26 +55,28 @@ jar {
     }
 }
 
-ideaProject {
-    javaVersion = '1.6'
+idea {
+    project {
+        jdkName = 1.6
 
-    withXml { provider ->
-        def node = provider.asNode()
+        ipr.withXml { provider ->
+            def node = provider.asNode()
 
-        // Use GIT
-        def vcsConfig = node.component.find { it.'@name' == 'VcsDirectoryMappings' }
-        vcsConfig.mapping[0].'@vcs' = 'Git'
+            // Use GIT
+            def vcsConfig = node.component.find { it.'@name' == 'VcsDirectoryMappings' }
+            vcsConfig.mapping[0].'@vcs' = 'Git'
 
-        // Set Gradle home
-        def gradleSettings = node.appendNode('component', [name: 'GradleSettings'])
-        gradleSettings.appendNode('option', [name: 'SDK_HOME', value: gradle.gradleHomeDir])
+            // Set Gradle home
+            def gradleSettings = node.appendNode('component', [name: 'GradleSettings'])
+            gradleSettings.appendNode('option', [name: 'SDK_HOME', value: gradle.gradleHomeDir])
+        }
     }
-}
 
-ideaModule {
-    scopes.COMPILE.plus.add(configurations.provided)
-    scopes.COMPILE.plus.add(configurations.testProvided)
-    scopes.TEST.plus.add(configurations.testProvided)
+    module {
+        scopes.COMPILE.plus.add(configurations.provided)
+        scopes.COMPILE.plus.add(configurations.testProvided)
+        scopes.TEST.plus.add(configurations.testProvided)
+    }
 }
 
 def distDir = "$buildDir/dist"
@@ -100,4 +102,8 @@ task zipDist(type: Zip, dependsOn: copyDistResources) {
 
 task dist(dependsOn: [copyDistResources, zipDist]) << {
     description = "Creates plugin distribution"
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '1.0-milestone-6'
 }
