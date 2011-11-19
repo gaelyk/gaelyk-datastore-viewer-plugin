@@ -1,3 +1,9 @@
+### Version 0.4 (November 19, 2011)
+
+* Improved UI look & feel by using [Twitter Boostrap](http://twitter.github.com/bootstrap/) - [Issue 2](https://github.com/bmuschko/gaelyk-datastore-viewer-plugin/issues#issue/2).
+* Using GaelykBindings annotation in service. *Note:* The annotation was introduced with Gaelyk 1.0. Your projects require to run Gaelyk >= 1.0.
+* Datatype Enum (`DatastorePropertyType.groovy`) became Java class. GAE had an issue with curried closures. Also [GROOVY-4641](http://jira.codehaus.org/browse/GROOVY-4641) was really annoying.
+
 ### Version 0.3 (May 18, 2011)
 
 * Datastore metadata query category got moved into Gaelyk core with 0.7. Depending on Gaelyk core for metadata queries.

@@ -3,7 +3,8 @@
 The plugin implements a reusable administration interface to browse the entities that have been created by the application
 leveraging [metadata queries](http://code.google.com/appengine/docs/java/datastore/metadataqueries.html) introduced with
 the Google App Engine SDK 1.4.0. This plugin is intended for local development. If you want to deploy the plugin with your
-application to the cloud make sure you secure the access to the plugin!
+application to the cloud make sure you secure the access to the plugin! You can have a look at the datastore viewer at
+[http://gaelyk-datastore-viewer.appspot.com/](http://gaelyk-datastore-viewer.appspot.com/).
 
 ## Installation
 
