@@ -136,7 +136,7 @@ class DatastorePropertyTypeTest {
 
     @Test
     void testFormatValueForMessageHandle() {
-        assert DatastorePropertyType.MESSAGING_HANDLE.formatValue(new IMHandle(new URL('http://www.google.com'), 'http://www.test.com')) == 'http://www.google.com http://www.test.com'
+        assert DatastorePropertyType.MESSAGING_HANDLE.formatValue(new IMHandle(IMHandle.Scheme.unknown, 'http://www.google.com')) == 'http://www.google.com'
     }
 
     @Test
@@ -256,7 +256,7 @@ class DatastorePropertyTypeTest {
 
     @Test
     void testParseValueForMessageHandle() {
-        assert DatastorePropertyType.MESSAGING_HANDLE.parseValue('http://www.google.com http://www.test.com') == new IMHandle(new URL('http://www.google.com'), 'http://www.test.com')
+        assert DatastorePropertyType.MESSAGING_HANDLE.parseValue('http://www.google.com') == new IMHandle(IMHandle.Scheme.unknown, 'http://www.google.com')
     }
 
     @Test

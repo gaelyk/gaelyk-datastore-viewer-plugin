@@ -1,7 +1,12 @@
+apply plugin: 'java'
 apply plugin: 'groovy'
 apply plugin: 'idea'
 version = '0.4'
 defaultTasks 'clean', 'build', 'dist'
+
+// Support cross-compilation
+sourceSets.main.java.srcDirs = []
+sourceSets.main.groovy.srcDir 'src/main/java'
 
 configurations {
     provided {
