@@ -87,7 +87,7 @@ idea {
 def distDir = "$buildDir/dist"
 def distLibDir = "$distDir/war/WEB-INF/lib"
 
-task copyDistResources << {
+task copyDistResources(dependsOn: jar) << {
     description = "Copies dist resources"
 
     ant.delete(dir: distDir)
