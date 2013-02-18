@@ -15,11 +15,11 @@
  */
 package groovyx.gaelyk.plugins.datastore.viewer.service
 
-import groovyx.gaelyk.GaelykBindings
 import groovyx.gaelyk.logging.GroovyLogger
 import groovyx.gaelyk.plugins.datastore.viewer.data.EntityBrowsingData
 import groovyx.gaelyk.plugins.datastore.viewer.pagination.EntityPage
 import groovyx.gaelyk.plugins.datastore.viewer.pagination.Pagination
+
 import com.google.appengine.api.datastore.*
 
 /**
@@ -27,7 +27,6 @@ import com.google.appengine.api.datastore.*
  *
  * @author Benjamin Muschko
  */
-@GaelykBindings
 class DatastoreViewerService {
     def log = new GroovyLogger("groovyx.gaelyk.plugins.datastore.viewer.service.DatastoreViewerService")
 
@@ -40,6 +39,7 @@ class DatastoreViewerService {
      * @return Entity browsing data 
      */
     EntityBrowsingData getEntityBrowsingData(String kind, Integer offset, Integer limit) {
+        DatastoreService datastore = DatastoreServiceFactory.datastoreService
         EntityBrowsingData entityBrowsingData = new EntityBrowsingData()
         Pagination pagination = new Pagination(offset, limit)
 

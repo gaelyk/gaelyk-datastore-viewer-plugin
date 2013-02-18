@@ -1,3 +1,5 @@
+package data
+
 import com.google.appengine.api.datastore.Entity
 import groovyx.gaelyk.plugins.datastore.viewer.data.DatastorePropertyType
 

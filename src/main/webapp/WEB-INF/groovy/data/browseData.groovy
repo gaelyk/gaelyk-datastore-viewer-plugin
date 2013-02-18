@@ -1,4 +1,7 @@
+package data
+
 import groovyx.gaelyk.plugins.datastore.viewer.data.EntityBrowsingData
+
 
 log.info "Browsing data"
 

@@ -5,3 +5,8 @@ out
 *.iws
 .idea
 .gradle
+/.settings
+/bin
+/.classpath
+/.project
+/build_old.gradle

@@ -1,3 +1,5 @@
+package data
+
 log.info "Creating data"
 
 def kind = params.kind

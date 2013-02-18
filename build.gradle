@@ -1,56 +1,49 @@
-apply plugin: 'java'
-apply plugin: 'groovy'
-apply plugin: 'idea'
-version = '0.4'
-defaultTasks 'clean', 'build', 'dist'
+buildscript {
 
-// Support cross-compilation
-sourceSets.main.java.srcDirs = []
-sourceSets.main.groovy.srcDir 'src/main/java'
-
-configurations {
-    provided {
-        description = 'Non-exported compile-time dependencies'
+    repositories {
+        mavenCentral()
     }
 
-    testProvided {
-        description = 'Non-exported compile-time test dependencies'
+    dependencies {
+        classpath 'org.gradle.api.plugins:gradle-gaelyk-plugin:0.4.1'
+        classpath 'org.gradle.api.plugins:gradle-gae-plugin:0.7.6'
     }
 }
 
-sourceSets {
-    main {
-        compileClasspath += configurations.provided
-        compileClasspath += configurations.testProvided
-    }
+apply from: 'https://raw.github.com/gaelyk/gaelyk/master/common.gradle'
 
-    test {
-        compileClasspath += configurations.testProvided
-        runtimeClasspath += configurations.testProvided
-    }
-}
 
-repositories {
-    mavenCentral()
-    add(new org.apache.ivy.plugins.resolver.URLResolver()) {
-        name = "GitHub"
-        addArtifactPattern 'http://cloud.github.com/downloads/glaforge/[organisation]/[module]-[revision].[ext]'
-    }
-}
+apply plugin: 'maven'
+apply plugin: 'gae'
+apply plugin: 'gaelyk'
+
+def pluginName = 'gaelyk-datastore-viewer'
+version = ext.gaelykLatestVersion
+group = 'org.gaelyk'
 
 dependencies {
-    def appEngineVersion = '1.6.0'
-    groovy group: 'org.codehaus.groovy', name: 'groovy', version: '1.8.4'
-    compile group: 'gaelyk', name: 'gaelyk', version: '1.1'
-    compile group: 'com.google.appengine', name: 'appengine-api-1.0-sdk', version: appEngineVersion
-    compile group: 'com.google.appengine', name: 'appengine-api-labs', version: appEngineVersion
-    testCompile group: 'com.google.appengine', name: 'appengine-api-stubs', version: appEngineVersion
-    testCompile group: 'com.google.appengine', name: 'appengine-testing', version: appEngineVersion
-    testCompile group: 'junit', name: 'junit', version: '4.+'
-    testProvided group: 'org.apache.geronimo.specs', name: 'geronimo-servlet_2.5_spec', version: '1.2'
+	groovy "org.codehaus.groovy:groovy-all:${ext.gaelykGroovyVersion}"
+	compile "com.google.appengine:appengine-api-1.0-sdk:${ext.gaelykAppEngineVersion}",
+	        "com.google.appengine:appengine-api-labs:${ext.gaelykAppEngineVersion}"
+	compile	"org.gaelyk:gaelyk:${ext.gaelykLatestVersion}"
+	compile	"org.gaelyk:gaelyk-resources:${ext.gaelykLatestVersion}"
+    compile "org.gaelyk:gaelyk-bootstrap-resources:${ext.gaelykLatestVersion}"
+
+
+	testCompile "org.gaelyk:gaelyk-spock:${ext.gaelykSpockLatestVersion}",
+			"com.google.appengine:appengine-api-stubs:${ext.gaelykAppEngineVersion}",
+			"com.google.appengine:appengine-testing:${ext.gaelykAppEngineVersion}"
+			
+	gaeSdk "com.google.appengine:appengine-java-sdk:${ext.gaelykAppEngineVersion}"
+}
+
+
+gae {
+    optimizeWar = true
 }
 
 jar {
+	baseName pluginName
     manifest {
         attributes 'Implementation-Title': 'Gaelyk datastore viewer plugin',
                    'Implementation-Version': version,
@@ -60,55 +53,118 @@ jar {
     }
 }
 
-idea {
-    project {
-        jdkName = 1.6
+jar.dependsOn gaelykPrecompileTemplate
+jar.dependsOn gaelykPrecompileGroovlet
 
-        ipr.withXml { provider ->
-            def node = provider.asNode()
+task javadocJar(type: Jar, dependsOn: javadoc) {
+	baseName = pluginName
+	from "${project.docsDir}/javadoc"
+	classifier = 'javadoc'
+}
 
-            // Use GIT
-            def vcsConfig = node.component.find { it.'@name' == 'VcsDirectoryMappings' }
-            vcsConfig.mapping[0].'@vcs' = 'Git'
+task sourcesJar(type: Jar) {
+	baseName = pluginName
+	from sourceSets.main.allSource
+	classifier = 'sources'
+}
 
-            // Set Gradle home
-            def gradleSettings = node.appendNode('component', [name: 'GradleSettings'])
-            gradleSettings.appendNode('option', [name: 'SDK_HOME', value: gradle.gradleHomeDir])
-        }
+configurations {
+    plugin.extendsFrom(signatures)
+}
+
+artifacts {
+	plugin jar
+	plugin javadocJar
+	plugin sourcesJar
+}
+
+task copyRuntimeLibraries {
+    def webAppLibDirName = 'src/main/webapp/WEB-INF/lib'
+    description = "Copies runtime libraries to $webAppLibDirName."
+
+    copy {
+        into webAppLibDirName
+        from configurations.runtime.files
     }
-
-    module {
-        scopes.COMPILE.plus.add(configurations.provided)
-        scopes.COMPILE.plus.add(configurations.testProvided)
-        scopes.TEST.plus.add(configurations.testProvided)
-    }
 }
 
-def distDir = "$buildDir/dist"
-def distLibDir = "$distDir/war/WEB-INF/lib"
+boolean signingEnabled = !hasProperty('skipSigning') || skipSigning != 'true'
+println "Signing is ${signingEnabled ? 'enabled' : 'disabled'}"
 
-task copyDistResources(dependsOn: jar) << {
-    description = "Copies dist resources"
+if(hasProperty('nexusUsername') && hasProperty('nexusPassword')){
+	if(signingEnabled){
+		apply plugin: 'signing'
+		signing { sign configurations.plugin }
+		uploadPlugin.dependsOn signPlugin
+	}
 
-    ant.delete(dir: distDir)
 
-    ant.copy todir: "$distDir/war", {
-        fileset dir: "war"
-    }
-
-    ant.copy file: jar.archivePath, todir: distLibDir
+	uploadPlugin {
+		repositories {
+			mavenDeployer {
+                if(signingEnabled){
+                    beforeDeployment { MavenDeployment deployment ->
+                        signing.signPom(deployment)
+                    }                    
+                }
+	
+				def auth = {
+				  authentication(userName: nexusUsername, password: nexusPassword)
+				}
+	
+				repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/", auth)
+				snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots", auth)
+	
+	
+				pom.project {
+				   name 'Gaelyk Datastore Viewer Plugin'
+				   packaging 'jar'
+				   description 'Gaelyk Datastore Viewer Plugin adds simple console which helps you manage App Engine Datastore.'
+				   url 'https://github.com/gaelyk/gaelyk-datastore-viewer-plugin'
+	
+				   scm {
+					   url 'scm:git@github.com:gaelyk/gaelyk-datastore-viewer-plugin.git'
+					   connection 'scm:git@github.com:gaelyk/gaelyk-datastore-viewer-plugin.git'
+					   developerConnection 'scm:git@github.com:gaelyk/gaelyk-datastore-viewer-plugin.git'
+				   }
+	
+				   licenses {
+					   license {
+						   name 'The Apache Software License, Version 2.0'
+						   url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+						   distribution 'repo'
+					   }
+				   }
+	
+				   developers {
+                       developer {
+                           id 'bmuschko'
+                           name 'Benjamin Muschko'
+                       }
+					   developer {
+						   id 'vladimirorany'
+						   name 'Vladimir Orany'
+					   }
+				   }
+			   }
+	
+			   //mess with the generated pom to set the 'packaging' tag
+			   pom.withXml { XmlProvider xmlProvider ->
+				   def xml = xmlProvider.asString()
+				   def pomXml = new XmlParser().parse(new ByteArrayInputStream(xml.toString().bytes))
+	
+				   pomXml.version[0] + { packaging('jar') }
+	
+				   def newXml = new StringWriter()
+				   def printer = new XmlNodePrinter(new PrintWriter(newXml))
+				   printer.preserveWhitespace = true
+				   printer.print(pomXml)
+				   xml.setLength(0)
+				   xml.append(newXml.toString())
+			   }
+			}
+		}
+	}
 }
 
-task zipDist(type: Zip, dependsOn: copyDistResources) {
-    description = "Zips distribution"
-
-    from distDir
-}
-
-task dist(dependsOn: [copyDistResources, zipDist]) << {
-    description = "Creates plugin distribution"
-}
-
-task wrapper(type: Wrapper) {
-    gradleVersion = '1.0-milestone-6'
-}
+jar.enabled = true

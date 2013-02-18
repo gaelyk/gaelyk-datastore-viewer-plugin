@@ -15,7 +15,6 @@
  */
 package groovyx.gaelyk.plugins.datastore.viewer.category
 
-import groovyx.gaelyk.GaelykCategory
 import org.junit.runners.BlockJUnit4ClassRunner
 import org.junit.runners.model.FrameworkMethod
 import org.junit.runners.model.Statement
@@ -31,12 +30,8 @@ class GaelykCategoryJUnitRunner extends BlockJUnit4ClassRunner {
     }
 
     protected Statement methodBlock(FrameworkMethod method) {
-        def stmt = super.methodBlock(method);
+        def stmt = super.methodBlock(method)
 
-        return {
-            use([GaelykCategory]) {
-                stmt.evaluate()
-            }
-        } as Statement
+        return { stmt.evaluate() } as Statement
     }
 }
