@@ -1,4 +1,4 @@
-package data
+package groovyx.gaelyk.plugins.datastore.viewer
 
 import com.google.appengine.api.datastore.Entity
 import groovyx.gaelyk.plugins.datastore.viewer.data.DatastorePropertyType
@@ -24,4 +24,4 @@ namespace.of(selectedNamespace) {
     entity.save()
 }
 
-redirect "/data/browse?kind=${kind}&namespace=${selectedNamespace}"
+redirect "/_ah/gaelyk-datastore-viewer/browse?kind=${kind}&namespace=${selectedNamespace}"

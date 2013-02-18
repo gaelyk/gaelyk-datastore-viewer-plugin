@@ -1,12 +1,21 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Datastore Viewer</title>
-        <script type="text/javascript" src="/js/data/datastore-viewer.js"></script>
-        <link rel="shortcut icon" href="/images/gaelyk-small-favicon.png" type="image/png">
-        <link rel="icon" href="/images/gaelyk-small-favicon.png" type="image/png">
-		<link rel="stylesheet" type="text/css" href="/css/data/datastore-viewer.css"/>
-        <link rel="stylesheet" type="text/css" href="/css/data/bootstrap.min.css"/>
+		<title>${twitterBootstrap.brand} Data Viewer</title>
+		<link rel="shortcut icon" href="http://gaelyk.appspot.com/favicon.ico"
+			type="image/ico">
+		<link rel="icon" href="http://gaelyk.appspot.com/favicon.ico"
+			type="image/ico">
+		<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+		<script type="text/javascript" src="http://code.jquery.com/jquery-migrate-1.1.0.min.js"></script>
+		<script type="text/javascript" src="$twitterBootstrap.js"></script>
+		<script type="text/javascript" src="/gpr/dataviewer/js/datastore-viewer.js"></script>
+		<link rel="stylesheet" type="text/css"
+			href="$twitterBootstrap.css" />
+		<link rel="stylesheet" type="text/css"
+			href="$twitterBootstrap.responsive" />
+		
+		<link rel="stylesheet" type="text/css" href="/gpr/dataviewer/css/datastore-viewer.css"/>
         <style type="text/css">
             /* Override some defaults */
             html, body {
@@ -52,23 +61,24 @@
                 margin-left: 0;
                 padding-left: 19px;
                 border-left: 1px solid #eee;
-            }
-
-            .topbar .btn {
-                border: 0;
-            }			
+            }		
         </style>
+        <style type="text/css">
+		body {
+			padding-top: ${twitterBootstrap.gap}px;
+		}
+		</style>
     </head>
     <body>
-        <div class="topbar">
-            <div class="fill">
-                <div class="container">
-                    <a class="brand">Datastore Viewer</a>
-                    <ul class="nav">
-                        <li class="active"><a href="/data/browse">Home</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+    	<div class="navbar navbar-fixed-top">
+			<div class="navbar-inner">
+				<div class="container">
+					<a class="brand" href="/_ah/gaelyk-datastore-viewer/browse">${twitterBootstrap.brand} Data Viewer</a>
+					<ul class="nav">
+	                    <li class="active"><a href="/_ah/gaelyk-datastore-viewer/browse">Home</a></li>
+	                </ul>
+				</div>
+			</div>
+		</div>
         <div class="container">
             <div class="content">

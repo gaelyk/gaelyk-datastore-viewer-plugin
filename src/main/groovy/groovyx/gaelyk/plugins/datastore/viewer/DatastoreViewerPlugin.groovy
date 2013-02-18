@@ -12,19 +12,19 @@ class DatastoreViewerPlugin extends PluginBaseScript {
             // Plugin library variable
             plugins = [
                 datastoreviewer: [
-                    version: "0.4"]
+                    version: "2.0-SNAPSHOT"]
             ]
         }
 
         routes {
-            get  "/data",                   redirect: "/data/browse"
-            get  "/data/",                  redirect: "/data/browse"
-            get  "/data/browse",            forward:  "/data/browseData.groovy"
-            get  "/data/edit/@kind/@id",    forward:  "/data/editData.groovy?kind=@kind&id=@id"
-            post "/data/update",            forward:  "/data/updateData.groovy"
-            post "/data/delete",            forward:  "/data/deleteData.groovy"
-            get  "/data/create/@kind",      forward:  "/data/createData.groovy?kind=@kind"
-            post "/data/insert/@kind",      forward:  "/data/insertData.groovy?kind=@kind"
+            get  "/_ah/gaelyk-datastore-viewer",                   redirect: "/_ah/gaelyk-datastore-viewer/browse"
+            get  "/_ah/gaelyk-datastore-viewer/",                  redirect: "/_ah/gaelyk-datastore-viewer/browse"
+            get  "/_ah/gaelyk-datastore-viewer/browse",            forward:  "/groovyx/gaelyk/plugins/datastore/viewer/browseData.groovy"
+            get  "/_ah/gaelyk-datastore-viewer/edit/@kind/@id",    forward:  "/groovyx/gaelyk/plugins/datastore/viewer/editData.groovy?kind=@kind&id=@id"
+            post "/_ah/gaelyk-datastore-viewer/update",            forward:  "/groovyx/gaelyk/plugins/datastore/viewer/updateData.groovy"
+            post "/_ah/gaelyk-datastore-viewer/delete",            forward:  "/groovyx/gaelyk/plugins/datastore/viewer/deleteData.groovy"
+            get  "/_ah/gaelyk-datastore-viewer/create/@kind",      forward:  "/groovyx/gaelyk/plugins/datastore/viewer/createData.groovy?kind=@kind"
+            post "/_ah/gaelyk-datastore-viewer/insert/@kind",      forward:  "/groovyx/gaelyk/plugins/datastore/viewer/insertData.groovy?kind=@kind"
         }
     }
 }

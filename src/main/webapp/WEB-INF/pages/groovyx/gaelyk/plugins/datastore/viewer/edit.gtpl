@@ -1,6 +1,6 @@
 <% import groovyx.gaelyk.plugins.datastore.viewer.data.DatastorePropertyType %>
 
-<% include '/WEB-INF/includes/data/header.gtpl' %>
+<% include '/WEB-INF/includes/groovyx/gaelyk/plugins/datastore/viewer/header.gtpl' %>
 
 <%
   def entity = request.entity
@@ -11,7 +11,7 @@
 	<h2>Edit Entity: ${entity.kind}</h2>
 </div>
 
-<form action="/data/update" method="post">
+<form action="/_ah/gaelyk-datastore-viewer/update" method="post">
 	<p><span class="label notice">Notice</span> Enter information for the entity below. If you'd like to change a property's type, set it to Null, save the entity, edit the entity again, and change the type.</p>
 <div class="alert-message block-message info">
 	<strong>Decoded entity key:</strong> ${entity.key.id}<br><br>
@@ -30,7 +30,7 @@
         	<input type="hidden" name="name_${index}" value="${property.key.name}">
             <input type="text" name="value_${index}" size="32" value="${formattedPropertyValue}" class="span5">
             <% if(propertyType == DatastorePropertyType.DATASTORE_KEY) { %>
-            	(<a href="/data/edit/${propertyValue.kind}/${propertyValue.id}">${propertyValue.kind}:id=${propertyValue.id}</a>)
+            	(<a href="/_ah/gaelyk-datastore-viewer/edit/${propertyValue.kind}/${propertyValue.id}">${propertyValue.kind}:id=${propertyValue.id}</a>)
            	<% } %>
         </div>
      </div>
@@ -57,8 +57,8 @@
 </fieldset>
 <div class="actions">
 	<input type="submit" value="Update" name="Update" class="btn primary">
-	<input type="button" value="Cancel" name="Cancel" class="btn" onclick="javascript:document.location.href='/data/browse?kind=${entity.kind}&namespace=${request.namespace}'">
+	<input type="button" value="Cancel" name="Cancel" class="btn" onclick="javascript:document.location.href='/_ah/gaelyk-datastore-viewer/browse?kind=${entity.kind}&namespace=${request.namespace}'">
 </div>
 </form>
 
-<% include '/WEB-INF/includes/data/footer.gtpl' %>
+<% include '/WEB-INF/includes/groovyx/gaelyk/plugins/datastore/viewer/footer.gtpl' %>

@@ -1,4 +1,4 @@
-package data
+package groovyx.gaelyk.plugins.datastore.viewer
 
 import com.google.appengine.api.datastore.Key
 import com.google.appengine.api.datastore.KeyFactory
@@ -20,4 +20,4 @@ namespace.of(selectedNamespace) {
     request.kindProperties = kindProperties
 }
 
-forward '/WEB-INF/pages/data/edit.gtpl'
+forward '/WEB-INF/pages/groovyx/gaelyk/plugins/datastore/viewer/edit.gtpl'

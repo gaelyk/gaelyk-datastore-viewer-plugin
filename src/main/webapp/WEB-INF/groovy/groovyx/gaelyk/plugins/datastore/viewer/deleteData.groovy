@@ -1,4 +1,4 @@
-package data
+package groovyx.gaelyk.plugins.datastore.viewer
 
 import groovyx.gaelyk.plugins.datastore.viewer.data.EntityBrowsingData
 
@@ -39,4 +39,4 @@ namespace.of(selectedNamespace) {
     request.page = entityBrowsingData.entityPage
 }
 
-redirect "/data/browse?kind=${kind}&namespace=${selectedNamespace}"
+redirect "/_ah/gaelyk-datastore-viewer/browse?kind=${kind}&namespace=${selectedNamespace}"

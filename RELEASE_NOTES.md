@@ -1,3 +1,9 @@
+### Version 2.0 (SNAPSHOT)
+* Changed version scheme to Gaelyk versioning
+* Updated for Gaelyk 2.0
+* Converted to binary plugin avaiable as `org.gaelyk:gaelyk-datastore-viewer:2.0` on Maven Central
+* Changed plugin url to `/_ah/gaelyk-datastore-viewer/`
+
 ### Version 0.4 (November 19, 2011)
 
 * Improved UI look & feel by using [Twitter Boostrap](http://twitter.github.com/bootstrap/) - [Issue 2](https://github.com/bmuschko/gaelyk-datastore-viewer-plugin/issues#issue/2).

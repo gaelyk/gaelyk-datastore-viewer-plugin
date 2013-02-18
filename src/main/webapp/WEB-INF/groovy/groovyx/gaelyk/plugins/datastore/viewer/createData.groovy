@@ -1,4 +1,4 @@
-package data
+package groovyx.gaelyk.plugins.datastore.viewer
 
 log.info "Creating data"
 
@@ -10,4 +10,4 @@ request.kind = kind
 request.kindProperties = kindProperties
 request.namespace = selectedNamespace
 
-forward '/WEB-INF/pages/data/create.gtpl'
+forward '/WEB-INF/pages/groovyx/gaelyk/plugins/datastore/viewer/create.gtpl'

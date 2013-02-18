@@ -1,4 +1,4 @@
-package data
+package groovyx.gaelyk.plugins.datastore.viewer
 
 import groovyx.gaelyk.plugins.datastore.viewer.data.EntityBrowsingData
 
@@ -21,4 +21,4 @@ namespace.of(selectedNamespace) {
     request.page = entityBrowsingData.entityPage
 }
 
-forward '/WEB-INF/pages/data/browse.gtpl'
+forward '/WEB-INF/pages/groovyx/gaelyk/plugins/datastore/viewer/browse.gtpl'

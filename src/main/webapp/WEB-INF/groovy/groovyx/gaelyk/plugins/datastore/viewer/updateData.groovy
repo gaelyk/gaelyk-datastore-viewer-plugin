@@ -1,4 +1,4 @@
-package data
+package groovyx.gaelyk.plugins.datastore.viewer
 
 import com.google.appengine.api.datastore.Key
 import com.google.appengine.api.datastore.KeyFactory
@@ -23,4 +23,4 @@ for(i in 0..numberOfFields - 1) {
 
 entity.save()
 
-redirect "/data/browse?kind=${entity.kind}&namespace=${entity.namespace}"
+redirect "/_ah/gaelyk-datastore-viewer/browse?kind=${entity.kind}&namespace=${entity.namespace}"

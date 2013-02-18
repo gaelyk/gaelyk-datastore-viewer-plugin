@@ -8,6 +8,14 @@ application to the cloud make sure you secure the access to the plugin! You can 
 
 ## Installation
 
+Add following line your `build.gradle` file `dependencies` configuration closure.
+
+```
+    compile 'org.gaelyk:gaelyk-datastore-viewer:2.0'
+```
+
+### Before version 2.0
+
 To use the plugin in your Gaelyk application extract the distribution into your project directory. You should end up
 with multiple extra files in your `war` directory as well as its subdirectories and a plugin descriptor named `datastoreViewerPlugin.groovy` under `war/WEB-INF/plugins`.
 
@@ -17,7 +25,7 @@ If you haven't created the file `war/WEB-INF/plugins.groovy` yet please create i
 
 ## Usage
 
-After installing the plugin you will be able to access the datastore viewer via the URL [http://localhost:8080/data/browse](http://localhost:8080/data/browse).
+After installing the plugin you will be able to access the datastore viewer via the URL [http://localhost:8080/_ah/gaelyk-datastore-viewer/browse](http://localhost:8080/_ah/gaelyk-datastore-viewer/browse).
 
 ### Lazy Variables
 
@@ -135,7 +143,7 @@ defined in your web.xml. The following example only grants access to registered 
 
     <security-constraint>
        <web-resource-collection>
-          <url-pattern>/data/*</url-pattern>
+          <url-pattern>/_ah/gaelyk-datastore-viewer/*</url-pattern>
        </web-resource-collection>
        <auth-constraint>
           <role-name>admin</role-name>

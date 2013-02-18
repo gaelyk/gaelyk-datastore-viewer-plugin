@@ -1,6 +1,6 @@
 <% import groovyx.gaelyk.plugins.datastore.viewer.data.PropertyRepresentation %>
 
-<% include '/WEB-INF/includes/data/header.gtpl' %>
+<% include '/WEB-INF/includes/groovyx/gaelyk/plugins/datastore/viewer/header.gtpl' %>
 
 <%
   def kind = request.kind
@@ -10,7 +10,7 @@
 	<h2>Create Entity: ${kind}</h2>
 </div>
 
-<form action="/data/insert/${kind}" method="post">
+<form action="/_ah/gaelyk-datastore-viewer/insert/${kind}" method="post">
 	<p><span class="label notice">Notice</span> Enter information for the new entity below.</p>
 	<div class="alert-message block-message info">
        <strong>Namespace:</strong>&nbsp;&nbsp;&nbsp;<input type="text" name="namespace" value="${request.namespace}">
@@ -43,8 +43,8 @@
 </fieldset>
 <div class="actions">
 	<input type="submit" value="Insert" name="Insert" class="btn primary">
-	<input type="button" value="Cancel" name="Cancel" class="btn" onclick="javascript:document.location.href='/data/browse?kind=${kind}&namespace=${request.namespace}'">
+	<input type="button" value="Cancel" name="Cancel" class="btn" onclick="javascript:document.location.href='/_ah/gaelyk-datastore-viewer/browse?kind=${kind}&namespace=${request.namespace}'">
 </div>
 </form>
 
-<% include '/WEB-INF/includes/data/footer.gtpl' %>
+<% include '/WEB-INF/includes/groovyx/gaelyk/plugins/datastore/viewer/footer.gtpl' %>

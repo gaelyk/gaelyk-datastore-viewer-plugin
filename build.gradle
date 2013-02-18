@@ -29,6 +29,8 @@ dependencies {
 	compile	"org.gaelyk:gaelyk-resources:${ext.gaelykLatestVersion}"
     compile "org.gaelyk:gaelyk-bootstrap-resources:${ext.gaelykLatestVersion}"
 
+    // for testing only
+    compile "org.gaelyk:gaelyk-console:${ext.gaelykLatestVersion}"
 
 	testCompile "org.gaelyk:gaelyk-spock:${ext.gaelykSpockLatestVersion}",
 			"com.google.appengine:appengine-api-stubs:${ext.gaelykAppEngineVersion}",
