@@ -15,14 +15,16 @@
  */
 package groovyx.gaelyk.plugins.datastore.viewer.service
 
-import com.google.appengine.tools.development.testing.LocalDatastoreServiceTestConfig
-import com.google.appengine.tools.development.testing.LocalServiceTestHelper
 import groovyx.gaelyk.plugins.datastore.viewer.category.GaelykCategoryJUnitRunner
+
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+
 import com.google.appengine.api.datastore.*
+import com.google.appengine.tools.development.testing.LocalDatastoreServiceTestConfig
+import com.google.appengine.tools.development.testing.LocalServiceTestHelper
 
 /**
  * Test for datastore viewer service.
@@ -51,7 +53,7 @@ class DatastoreViewerServiceTest {
         Entity goal = new Entity("Goal", "Goal")
         goal.name = "Traveling"
         goal.description = "All continents"
-        datastoreViewerService.datastore.put goal
+        DatastoreServiceFactory.datastoreService.put goal
 
         def entityBrowsingData = datastoreViewerService.getEntityBrowsingData("Goal", 0, 10)
         assert entityBrowsingData.kinds.size() == 1
@@ -83,7 +85,7 @@ class DatastoreViewerServiceTest {
     void testDeleteEntity() {
         Key key = KeyFactory.createKey("User", 1L)
         def entity = new Entity(key)
-        datastoreViewerService.datastore.put entity
+        DatastoreServiceFactory.datastoreService.put entity
         List<Entity> entitiesAfterInsert = queryEntities()
         assert entitiesAfterInsert.size() == 1
         assert entitiesAfterInsert.get(0).key.id == 1
@@ -94,7 +96,7 @@ class DatastoreViewerServiceTest {
 
     private List<Entity> queryEntities() {
         def query = new Query("User")
-        PreparedQuery preparedQuery = datastoreViewerService.datastore.prepare(query)
+        PreparedQuery preparedQuery = DatastoreServiceFactory.datastoreService.prepare(query)
         preparedQuery.asList(FetchOptions.Builder.withDefaults())
     }
 }
