@@ -7,11 +7,12 @@ application to the cloud make sure you secure the access to the plugin! You can 
 [http://gaelyk-datastore-viewer.appspot.com/](http://gaelyk-datastore-viewer.appspot.com/).
 
 ## Installation
+### Since 2.0 (Gaelyk 2.0 SNAPSHOT only)
 
 Add following line your `build.gradle` file `dependencies` configuration closure.
 
 ```
-    compile 'org.gaelyk:gaelyk-datastore-viewer:2.0'
+    compile 'org.gaelyk:gaelyk-datastore-viewer:2.0-SNAPSHOT'
 ```
 
 ### Before version 2.0
