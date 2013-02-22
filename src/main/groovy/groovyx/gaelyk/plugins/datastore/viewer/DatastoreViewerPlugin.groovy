@@ -19,7 +19,7 @@ class DatastoreViewerPlugin extends PluginBaseScript {
         }
 
         routes {
-            firstRouteIndex = FIRST_ROUTE_INDEX
+            startRoutingAt FIRST_ROUTE_INDEX
             
             get  "/_ah/gaelyk-datastore-viewer",                   redirect: "/_ah/gaelyk-datastore-viewer/browse"
             get  "/_ah/gaelyk-datastore-viewer/",                  redirect: "/_ah/gaelyk-datastore-viewer/browse"
