@@ -5,6 +5,8 @@ import groovyx.gaelyk.plugins.datastore.viewer.service.DatastoreViewerService
 
 class DatastoreViewerPlugin extends PluginBaseScript {
 
+    static final int FIRST_ROUTE_INDEX = -20000
+    
     @Override public Object run() {
         binding {
             datastoreViewerService = new DatastoreViewerService()
@@ -17,6 +19,8 @@ class DatastoreViewerPlugin extends PluginBaseScript {
         }
 
         routes {
+            firstRouteIndex = FIRST_ROUTE_INDEX
+            
             get  "/_ah/gaelyk-datastore-viewer",                   redirect: "/_ah/gaelyk-datastore-viewer/browse"
             get  "/_ah/gaelyk-datastore-viewer/",                  redirect: "/_ah/gaelyk-datastore-viewer/browse"
             get  "/_ah/gaelyk-datastore-viewer/browse",            forward:  "/groovyx/gaelyk/plugins/datastore/viewer/browseData.groovy"
